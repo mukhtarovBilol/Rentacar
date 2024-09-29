@@ -233,7 +233,7 @@ function checkButtonState() {
         var today = new Date().setHours(0, 0, 0, 0);
         var selectedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
         var selectedEndDate = new Date(endDate).setHours(0, 0, 0, 0);
-
+        
         if (selectedStartDate < today || selectedEndDate < today) {
             isButtonEnabled = false;
         }
@@ -247,7 +247,7 @@ function checkButtonState() {
 
 document.getElementById("start").addEventListener("change", function () {
     var startInput = this.value.split(":");
-    startInputHours = Number(startInput[0]) + 3;
+    startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
     time = this.value;
 
     document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
@@ -275,7 +275,6 @@ document.getElementById("end_date").addEventListener("change", function () {
     document.getElementById("end").disabled = false; // Активируем выбор времени возврата
     checkButtonState(); // Проверяем состояние кнопки
 });
-
 var prices = 0;
 
 function calculateRentalCost(days) {
