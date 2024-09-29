@@ -264,7 +264,6 @@ document.getElementById("end").addEventListener("change", function () {
     calculate();
     checkButtonState();
 });
-
 document.getElementById("start_date").addEventListener("change", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
@@ -273,9 +272,8 @@ document.getElementById("start_date").addEventListener("change", function () {
     // Если дата начала меньше сегодняшней даты
     if (selectedStartDate < today) {
         alert("Вы не можете выбрать прошедшую дату.");
-        // Устанавливаем значение на сегодняшнюю дату
-        this.value = today.toISOString().split('T')[0];
-        selectedStartDate = new Date(this.value); // Обновляем выбранную дату
+        this.value = today.toISOString().split('T')[0]; // Устанавливаем значение на сегодняшнюю дату
+        selectedStartDate = today; // Обновляем выбранную дату на сегодняшнюю
     }
 
     // Устанавливаем минимальную дату возврата как +2 дня от даты получения
@@ -292,7 +290,6 @@ document.getElementById("start_date").addEventListener("change", function () {
 document.getElementById("end_date").addEventListener("change", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
-    document.getElementById("end").disabled = false
     selectedStartDate.setHours(0, 0, 0, 0); // Убираем время
 
     // Проверка: дата возврата должна быть минимум на 2 дня позже даты получения
