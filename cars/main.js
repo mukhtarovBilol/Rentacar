@@ -246,11 +246,11 @@ function checkButtonState() {
         submitButton.disabled = !isButtonEnabled;
     }
 }
-
+document.getElementById("start").disabled = true
 document.getElementById("start").addEventListener("change", function () {
     var startInput = this.value.split(":");
     startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
-    document.getElementById("start").disabled = true
+
     document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
     checkButtonState();
 });
@@ -264,7 +264,8 @@ document.getElementById("end").addEventListener("change", function () {
     checkButtonState();
 });
 
-document.getElementById("start_date").addEventListener("change", function () {
+// Обработчик изменения даты начала
+document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
     document.getElementById("start").disabled = false
@@ -285,20 +286,12 @@ document.getElementById("start_date").addEventListener("change", function () {
     // Проверка и сброс текущей даты возврата
     resetEndDateIfInvalid(minimumReturnDate);
     checkButtonState(); // Проверяем состояние кнопки
-    openDatePicker(document.getElementById("end_date")); // Открываем окно выбора даты без фокуса
+
+    openDatePicker(this); // Открываем окно выбора даты без фокуса
 });
 
-// Обработка фокуса на поле даты начала
-document.getElementById("start_date").addEventListener("focus", function () {
-    openDatePicker(this);
-});
-
-// Обработка фокуса на поле даты окончания
-document.getElementById("end_date").addEventListener("focus", function () {
-    openDatePicker(this);
-});
-
-document.getElementById("end_date").addEventListener("change", function () {
+// Обработчик изменения даты окончания
+document.getElementById("end_date").addEventListener("input", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     document.getElementById("end").disabled = false
@@ -339,7 +332,6 @@ function openDatePicker(element) {
 // Дополнительные проверки при вводе даты
 document.getElementById("start_date").addEventListener("input", checkButtonState);
 document.getElementById("end_date").addEventListener("input", checkButtonState);
-
 
 
 var prices = 0;
