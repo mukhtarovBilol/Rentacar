@@ -234,7 +234,7 @@ function checkButtonState() {
         var today = new Date().setHours(0, 0, 0, 0);
         var selectedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
         var selectedEndDate = new Date(endDate).setHours(0, 0, 0, 0);
-
+        
         // Условие проверки
         if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
             isButtonEnabled = false;
@@ -250,7 +250,7 @@ function checkButtonState() {
 document.getElementById("start").addEventListener("change", function () {
     var startInput = this.value.split(":");
     startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
-
+    document.getElementById("start").disabled = true
     document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
     checkButtonState();
 });
@@ -267,6 +267,7 @@ document.getElementById("end").addEventListener("change", function () {
 document.getElementById("start_date").addEventListener("change", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
+    document.getElementById("start").disabled = false
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     // Если дата начала меньше сегодняшней даты
@@ -285,6 +286,16 @@ document.getElementById("start_date").addEventListener("change", function () {
     resetEndDateIfInvalid(minimumReturnDate);
     checkButtonState(); // Проверяем состояние кнопки
     openDatePicker(document.getElementById("end_date")); // Открываем окно выбора даты без фокуса
+});
+
+// Обработка фокуса на поле даты начала
+document.getElementById("start_date").addEventListener("focus", function () {
+    openDatePicker(this);
+});
+
+// Обработка фокуса на поле даты окончания
+document.getElementById("end_date").addEventListener("focus", function () {
+    openDatePicker(this);
 });
 
 document.getElementById("end_date").addEventListener("change", function () {
@@ -328,6 +339,7 @@ function openDatePicker(element) {
 // Дополнительные проверки при вводе даты
 document.getElementById("start_date").addEventListener("input", checkButtonState);
 document.getElementById("end_date").addEventListener("input", checkButtonState);
+
 
 
 var prices = 0;
