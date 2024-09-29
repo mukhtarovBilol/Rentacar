@@ -273,7 +273,8 @@ document.getElementById("start_date").addEventListener("change", function () {
     // Если дата начала меньше сегодняшней даты
     if (selectedStartDate < today) {
         alert("Вы не можете выбрать прошедшую дату.");
-        this.value = today.toISOString().split('T')[0]; // Устанавливаем текущую дату
+        // Устанавливаем значение на сегодняшнюю дату
+        this.value = today.toISOString().split('T')[0];
         selectedStartDate = new Date(this.value); // Обновляем выбранную дату
     }
 
@@ -282,22 +283,16 @@ document.getElementById("start_date").addEventListener("change", function () {
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
 
-    // Если дата возврата меньше минимальной, сбрасываем её
-    var currentEndDate = new Date(document.getElementById("end_date").value);
-    if (currentEndDate < minimumReturnDate) {
-        document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
-    }
-
+    // Проверка и сброс текущей даты возврата
+    resetEndDateIfInvalid(minimumReturnDate);
     checkButtonState(); // Проверяем состояние кнопки
-
-    // Открываем окно выбора даты сразу
-    this.focus();
-    this.click();
+    openDatePicker(document.getElementById("end_date")); // Открываем окно выбора даты без фокуса
 });
 
 document.getElementById("end_date").addEventListener("change", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
+    document.getElementById("end").disabled = false
     selectedStartDate.setHours(0, 0, 0, 0); // Убираем время
 
     // Проверка: дата возврата должна быть минимум на 2 дня позже даты получения
@@ -307,14 +302,31 @@ document.getElementById("end_date").addEventListener("change", function () {
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
         this.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем минимально допустимую дату
-
-        // Открываем окно выбора даты сразу
-        this.focus();
-        this.click();
+        openDatePicker(this); // Открываем окно выбора даты без фокуса
     }
 
     checkButtonState(); // Проверяем состояние кнопки
 });
+
+// Функция для сброса даты возврата, если она некорректна
+function resetEndDateIfInvalid(minimumReturnDate) {
+    var currentEndDate = new Date(document.getElementById("end_date").value);
+    if (currentEndDate < minimumReturnDate) {
+        document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
+    }
+}
+
+// Функция для открытия окна выбора даты без фокуса
+function openDatePicker(element) {
+    if (typeof element.showPicker === 'function') {
+        element.showPicker(); // Используем showPicker, если доступно
+    } else {
+        // Если showPicker не доступен, можно использовать фокус и клик как запасной вариант
+        element.focus();
+        element.click();
+    }
+}
+
 
 // Дополнительные проверки при вводе даты
 document.getElementById("start_date").addEventListener("input", checkButtonState);
