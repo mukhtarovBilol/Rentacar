@@ -234,7 +234,7 @@ function checkButtonState() {
         var today = new Date().setHours(0, 0, 0, 0);
         var selectedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
         var selectedEndDate = new Date(endDate).setHours(0, 0, 0, 0);
-        
+
         // Условие проверки
         if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
             isButtonEnabled = false;
@@ -250,7 +250,6 @@ function checkButtonState() {
 document.getElementById("start").addEventListener("change", function () {
     var startInput = this.value.split(":");
     startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
-    time = this.value;
 
     document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
     checkButtonState();
@@ -264,6 +263,7 @@ document.getElementById("end").addEventListener("change", function () {
     calculate();
     checkButtonState();
 });
+
 document.getElementById("start_date").addEventListener("change", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
@@ -272,8 +272,8 @@ document.getElementById("start_date").addEventListener("change", function () {
     // Если дата начала меньше сегодняшней даты
     if (selectedStartDate < today) {
         alert("Вы не можете выбрать прошедшую дату.");
-        this.value = today.toISOString().split('T')[0]; // Устанавливаем значение на сегодняшнюю дату
-        selectedStartDate = today; // Обновляем выбранную дату на сегодняшнюю
+        this.value = ""; // Сбрасываем значение, чтобы пользователь выбрал заново
+        return; // Прерываем выполнение функции
     }
 
     // Устанавливаем минимальную дату возврата как +2 дня от даты получения
@@ -290,6 +290,7 @@ document.getElementById("start_date").addEventListener("change", function () {
 document.getElementById("end_date").addEventListener("change", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
+    document.getElementById("end").disabled = false
     selectedStartDate.setHours(0, 0, 0, 0); // Убираем время
 
     // Проверка: дата возврата должна быть минимум на 2 дня позже даты получения
@@ -324,10 +325,10 @@ function openDatePicker(element) {
     }
 }
 
-
 // Дополнительные проверки при вводе даты
 document.getElementById("start_date").addEventListener("input", checkButtonState);
 document.getElementById("end_date").addEventListener("input", checkButtonState);
+
 
 var prices = 0;
 
