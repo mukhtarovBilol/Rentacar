@@ -194,93 +194,96 @@ getTitle = cardTitle.innerText
 
 // date
 
-// Инициализация переменных
-var startInputHours = 0;
-var endInputHours = 0;
 var time = "00"; // для email
 var endTime = "00"; // для email
 
-// Устанавливаем сегодняшнюю дату как минимальную для получения и возврата
-var today = new Date().toISOString().split('T')[0];
-document.getElementById("start_date").min = today;
-document.getElementById("end_date").min = today;
 
-function calculate() {
-    var startDate = new Date(document.getElementById("start_date").value);
-    var endDate = new Date(document.getElementById("end_date").value);
+$(document).ready(function() {
+    // Инициализация переменных
+    var startInputHours = 0;
+    var endInputHours = 0;
 
-    // Количество дней аренды
-    var differenceInTime = endDate.getTime() - startDate.getTime();
-    var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх
+    // Устанавливаем сегодняшнюю дату как минимальную для получения и возврата
+    var today = new Date().toISOString().split('T')[0];
+    $('#start_date').attr('min', today);
+    $('#end_date').attr('min', today);
 
-    // Учитываем, если время начала меньше времени окончания
-    if (startInputHours <= endInputHours) {
-        differenceInDays++;
-    }
+    function calculate() {
+        var startDate = new Date($('#start_date').val());
+        var endDate = new Date($('#end_date').val());
 
-    calculateRentalCost(differenceInDays);
-}
+        // Количество дней аренды
+        var differenceInTime = endDate.getTime() - startDate.getTime();
+        var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх
 
-function checkButtonState() {
-    var startDate = document.getElementById("start_date").value;
-    var endDate = document.getElementById("end_date").value;
-    var startTime = document.getElementById("start").value;
-    var endTime = document.getElementById("end").value;
-
-    var isButtonEnabled = startDate && endDate && startTime && endTime;
-
-    // Проверяем, что даты не в прошлом и дата окончания больше даты начала
-    if (isButtonEnabled) {
-        var today = new Date().setHours(0, 0, 0, 0);
-        var selectedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
-        var selectedEndDate = new Date(endDate).setHours(0, 0, 0, 0);
-        
-        // Условие проверки
-        if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
-            isButtonEnabled = false;
+        // Учитываем, если время начала меньше времени окончания
+        if (startInputHours <= endInputHours) {
+            differenceInDays++;
         }
+
+        calculateRentalCost(differenceInDays);
     }
 
-    var submitButton = document.getElementById("submitButton");
-    if (submitButton) {
-        submitButton.disabled = !isButtonEnabled;
+    function checkButtonState() {
+        var startDate = $('#start_date').val();
+        var endDate = $('#end_date').val();
+        var startTime = $('#start').val();
+        var endTime = $('#end').val();
+
+        var isButtonEnabled = startDate && endDate && startTime && endTime;
+
+        // Проверяем, что даты не в прошлом и дата окончания больше даты начала
+        if (isButtonEnabled) {
+            var today = new Date().setHours(0, 0, 0, 0);
+            var selectedStartDate = new Date(startDate + 'T' + startTime);
+            var selectedEndDate = new Date(endDate + 'T' + endTime);
+
+            // Условие проверки
+            if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
+                isButtonEnabled = false;
+            }
+        }
+
+        $('#submitButton').prop('disabled', !isButtonEnabled);
     }
+
+    $('#start').on('change', function() {
+        var startInput = $(this).val().split(':');
+        startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
+
+        $('#end_date').prop('disabled', false); // Активируем выбор даты возврата
+        checkButtonState();
+    });
+
+    $('#end').on('change', function() {
+        var endInput = $(this).val().split(':');
+        endInputHours = Number(endInput[0]);
+
+        calculate();
+        checkButtonState();
+    });
+
+    $('#start_date').on('change', function() {
+        var startDate = new Date($(this).val());
+        var nextDay = new Date(startDate);
+        nextDay.setDate(startDate.getDate() + 2);
+        $('#end_date').attr('min', nextDay.toISOString().split('T')[0]);
+        checkButtonState(); // Проверяем состояние кнопки
+    });
+
+    $('#end_date').on('change', function() {
+        $('#end').prop('disabled', false); // Активируем выбор времени возврата
+        checkButtonState(); // Проверяем состояние кнопки
+    });
+
+    // Дополнительные проверки при вводе даты
+    $('#start_date, #end_date').on('input', checkButtonState);
+});
+
+function calculateRentalCost(days) {
+    // Логика расчета стоимости аренды
+    console.log("Количество дней аренды: " + days);
 }
-
-document.getElementById("start").addEventListener("change", function () {
-    var startInput = this.value.split(":");
-    startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
-    time = this.value;
-
-    document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
-    checkButtonState();
-});
-
-document.getElementById("end").addEventListener("change", function () {
-    var endInput = this.value.split(":");
-    endInputHours = Number(endInput[0]);
-    endTime = this.value;
-
-    calculate();
-    checkButtonState();
-});
-
-document.getElementById("start_date").addEventListener("change", function () {
-    var startDate = new Date(this.value);
-    var nextDay = new Date(startDate);
-    nextDay.setDate(startDate.getDate() + 2);
-    document.getElementById("end_date").min = nextDay.toISOString().split('T')[0];
-    checkButtonState(); // Проверяем состояние кнопки
-});
-
-document.getElementById("end_date").addEventListener("change", function () {
-    document.getElementById("end").disabled = false; // Активируем выбор времени возврата
-    checkButtonState(); // Проверяем состояние кнопки
-});
-
-// Дополнительные проверки при вводе даты
-document.getElementById("start_date").addEventListener("input", checkButtonState);
-document.getElementById("end_date").addEventListener("input", checkButtonState);
 
 var prices = 0;
 
