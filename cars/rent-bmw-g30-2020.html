@@ -489,16 +489,15 @@
             </button>
             <h2>Checkout</h2>
 
-            <form action="" class="form">
+            <form class="form" id="myForm">
                 <input type="text" placeholder="Name" id="name" class="form__input" required>
                 <div class="input-group">
                     <input type="tel" id="countryCode" name="countryCode" value="+994" placeholder="Code">
-                    <input type="tel" id="message" name="message" class="form__number" placeholder="(XX) XXX-XX-XX"
-                        required>
+                    <input type="tel" id="message" name="message" class="form__number" placeholder="(XX) XXX-XX-XX" required>
                 </div>
                 <input type="email" id="email" placeholder="Email" required>
-                <textarea name="" placeholder="Text" id="message2" class="form__textarea"></textarea>
-                <button class="form__btn" onclick="sendMail()">Send</button>
+                <textarea placeholder="Text" id="message2" class="form__textarea"></textarea>
+                <button type="submit" class="form__btn">Send</button>
             </form>
 
         </div>
@@ -541,6 +540,7 @@
     <script src="main.js"></script>
     <script src="../script.js"></script>
     <script src="json.js"></script>
+    <script src="allinput.js"></script>
 
 </body>
 

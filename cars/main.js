@@ -182,8 +182,8 @@ headerInfoInput2.addEventListener("change", function () {
 
 var getEmail = "" // for email
 // get email
-document.getElementById("email")?.addEventListener("change", function () {
-    getEmail = document.getElementById("email")?.value
+document.getElementById("email").addEventListener("change", function () {
+    getEmail = document.getElementById("email").value
 })
 
 // get title
@@ -213,6 +213,7 @@ function calculate() {
     var differenceInTime = endDate.getTime() - startDate.getTime();
     var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх
 
+    // Учитываем, если время начала меньше времени окончания
     if (startInputHours <= endInputHours) {
         differenceInDays++;
     }
@@ -228,13 +229,14 @@ function checkButtonState() {
 
     var isButtonEnabled = startDate && endDate && startTime && endTime;
 
-    // Проверяем, что даты не в прошлом
+    // Проверяем, что даты не в прошлом и дата окончания больше даты начала
     if (isButtonEnabled) {
         var today = new Date().setHours(0, 0, 0, 0);
         var selectedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
         var selectedEndDate = new Date(endDate).setHours(0, 0, 0, 0);
         
-        if (selectedStartDate < today || selectedEndDate < today) {
+        // Условие проверки
+        if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
             isButtonEnabled = false;
         }
     }
@@ -275,6 +277,11 @@ document.getElementById("end_date").addEventListener("change", function () {
     document.getElementById("end").disabled = false; // Активируем выбор времени возврата
     checkButtonState(); // Проверяем состояние кнопки
 });
+
+// Дополнительные проверки при вводе даты
+document.getElementById("start_date").addEventListener("input", checkButtonState);
+document.getElementById("end_date").addEventListener("input", checkButtonState);
+
 var prices = 0;
 
 function calculateRentalCost(days) {
@@ -444,99 +451,6 @@ function limitInputLength(event) {
     }
 }
 
-// Добавляем обработчик события input
-countryCode.addEventListener('input', limitInputLength);
-// date
-
-const headerLink = document.querySelector(".header__info-link");
-const headerLinkCheck = document.querySelector(".header__info-link-check");
-
-// Функция для проверки заполненности всех полей
-function areAllFieldsFilled() {
-    const startDate = document.getElementById("start_date");
-    const startTime = document.getElementById("start");
-    const endDate = document.getElementById("end_date");
-    const endTime = document.getElementById("end");
-    const placeOfReceipt = document.querySelector(".header__info-selectValue7");
-    const returnLocation = document.querySelector(".header__info-selectValue8");
-
-    return {
-        startDate: startDate.value.trim() !== "",
-        startTime: startTime.value.trim() !== "",
-        endDate: endDate.value.trim() !== "",
-        endTime: endTime.value.trim() !== "",
-        placeOfReceipt: placeOfReceipt?.value.trim() !== "",
-        returnLocation: returnLocation?.value.trim() !== ""
-    };
-}
-
-// Функция для обновления состояния кнопки и сообщения
-function updateButtonState() {
-    const fieldsStatus = areAllFieldsFilled();
-
-    // Обновление состояния кнопки и сообщения
-    if (Object.values(fieldsStatus).every(status => status)) {
-        headerLink.disabled = false;
-        headerLinkCheck.innerHTML = "";
-    } else {
-        headerLink.disabled = true;
-        headerLinkCheck.innerHTML = "Fill in all fields";
-    }
-}
-
-// Функция для добавления рамок вокруг полей в зависимости от их состояния
-function highlightFields() {
-    const fieldsStatus = areAllFieldsFilled();
-
-    // Применение красной рамки для пустых полей и черной рамки для заполненных полей
-    document.getElementById("start_date").classList.toggle('error-border', !fieldsStatus.startDate);
-    document.getElementById("start").classList.toggle('error-border', !fieldsStatus.startTime);
-    document.getElementById("end_date").classList.toggle('error-border', !fieldsStatus.endDate);
-    document.getElementById("end").classList.toggle('error-border', !fieldsStatus.endTime);
-    document?.querySelector(".header__info-selectValue7")?.classList.toggle('error-border', !fieldsStatus.placeOfReceipt);
-    document?.querySelector(".header__info-selectValue8")?.classList.toggle('error-border', !fieldsStatus.returnLocation);
-
-    document.getElementById("start_date").classList.toggle('valid-border', fieldsStatus.startDate);
-    document.getElementById("start").classList.toggle('valid-border', fieldsStatus.startTime);
-    document.getElementById("end_date").classList.toggle('valid-border', fieldsStatus.endDate);
-    document.getElementById("end").classList.toggle('valid-border', fieldsStatus.endTime);
-    document?.querySelector(".header__info-selectValue7")?.classList.toggle('valid-border', fieldsStatus.placeOfReceipt);
-    document?.querySelector(".header__info-selectValue8")?.classList.toggle('valid-border', fieldsStatus.returnLocation);
-}
-
-// Обработчик события на поля ввода и выпадающие списки
-const inputs = [
-    document.getElementById("start_date"),
-    document.getElementById("start"),
-    document.getElementById("end_date"),
-    document.getElementById("end"),
-    document.querySelector(".header__info-selectValue7"),
-    document.querySelector(".header__info-selectValue8")
-];
-
-inputs.forEach(input => {
-    input?.addEventListener('input', () => {
-        updateButtonState();
-        highlightFields();
-    });
-    input?.addEventListener('change', () => {
-        updateButtonState();
-        highlightFields(); // Для select
-    });
-});
-
-// Обработчик события на кнопку
-headerLink.addEventListener("click", function () {
-    const fieldsStatus = areAllFieldsFilled();
-
-    if (Object.values(fieldsStatus).every(status => status)) {
-        document.getElementById("my-modal").classList.add("open");
-    } else {
-        headerLinkCheck.innerHTML = "Fill in all fields";
-        highlightFields(); // Подсвечиваем пустые поля красным бордером
-    }
-});
-
 // Закрытие модального окна
 document.getElementById("close-my-modal-btn").addEventListener("click", function () {
     document.getElementById("my-modal").classList.remove("open");
@@ -558,44 +472,62 @@ document.getElementById("my-modal").addEventListener('click', event => {
     event.currentTarget.classList.remove('open');
 });
 
-const formBtn = document.querySelector(".form__btn");
-formBtn.addEventListener("click", function (event) {
-    event.preventDefault(); // Предотвращаем отправку формы на сервер
-    console.log("Форма не отправлена");
+document.getElementById("myForm")?.addEventListener("submit", function(event) {
+    event.preventDefault(); // Предотвращаем стандартное поведение формы
+    sendMail(); // Вызываем функцию отправки
 });
 
 function sendMail() {
-    if (document.querySelector("#name").value !== '' && document.querySelector("#message").value !== '') {
-        (function () {
-            emailjs.init("ycbnej7QH72zg6TGT")
-        })();
+    // Получаем значения полей
+    const name = document.querySelector("#name").value.trim();
+    const countryCode = document.querySelector("#countryCode").value.trim();
+    const phoneNumber = document.querySelector("#message").value.trim();
+    const email = document.querySelector("#email").value.trim();
 
-        if (checkbox?.classList == 'checkbox active') {
-            var childrenSitting = "yes"
-        } else {
-            childrenSitting = "no"
-        }
-
-        var params = {
-            name: document.querySelector("#name").value + ' ' + "Car make " + getTitle + ", Date and time of receiving the car: " + getcar + ' ' + time + ', Return date and time: ' + comeback + ' ' + endTime,
-            message: countryCode.value + phoneNumber + ', Gmail client ' + getEmail + ', Do I need a car seat?: ' + childrenSitting + ', Pick up location: ' + getsCars + ', Car return location: ' + backCars + ', Number of passengers: ' + countPassanger + ", Total: " + morePrice?.innerHTML
-        };
-
-        console.log(params);
-
-
-        var serviceID = "service_ajn9ixc";
-        var templateID = "template_bge6w0q";
-
-        emailjs.send(serviceID, templateID, params)
-            .then(res => {
-                alert("Thank you. Application accepted. Our manager will contact you shortly.")
-                document.getElementById("my-modal").classList.remove("open")
-                document.querySelector("#name").value = ''
-                document.querySelector("#message").value = ''
-                document.querySelector("#message2").value = ''
-                document.getElementById("email").value = ''
-            })
-            .catch();
+    // Проверка обязательных полей, кроме textarea
+    if (name === '' || countryCode === '' || phoneNumber === '' || email === '') {
+        alert("Пожалуйста, заполните все обязательные поля.");
+        return; // Прерываем выполнение функции, если поля не заполнены
     }
+
+    // Проверка формата email (обязательно наличие точки и доменной части)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert("Пожалуйста, введите корректный адрес электронной почты.");
+        return; // Прерываем выполнение функции, если email некорректен
+    }
+
+    // Проверка формата телефонного номера (пример для формата +994 (XX) XXX-XX-XX)
+    const phonePattern = /^\+\d{3}\s*\(\d{2}\)\s*\d{3}-\d{2}-\d{2}$/;
+    if (!phonePattern.test(countryCode + phoneNumber)) {
+        alert("Пожалуйста, введите корректный номер телефона в формате: +994 (XX) XXX-XX-XX");
+        return; // Прерываем выполнение функции, если номер телефона некорректен
+    }
+
+    (function () {
+        emailjs.init("ycbnej7QH72zg6TGT");
+    })();
+
+    var childrenSitting = (checkbox?.classList.contains('active')) ? "yes" : "no";
+
+    var params = {
+        name: name + ' ' + "Car make " + getTitle + ", Date and time of receiving the car: " + getcar + ' ' + time + ', Return date and time: ' + comeback + ' ' + endTime,
+        message: countryCode + phoneNumber + ', Gmail client ' + email + ', Do I need a car seat?: ' + childrenSitting + ', Pick up location: ' + getsCars + ', Car return location: ' + backCars + ', Number of passengers: ' + countPassanger + ", Total: " + morePrice?.innerHTML
+    };
+
+    console.log(params);
+
+    var serviceID = "service_ajn9ixc"; // Укажите ваш ID сервиса
+    var templateID = "template_bge6w0q"; // Укажите ваш ID шаблона
+
+    emailjs.send(serviceID, templateID, params)
+        .then(res => {
+            alert("Спасибо. Заявка принята. Наш менеджер свяжется с вами в ближайшее время.");
+            document.getElementById("myForm").reset(); // Сброс формы после успешной отправки
+            document.getElementById("my-modal").classList.remove("open"); // Закрыть модальное окно
+        })
+        .catch(error => {
+            console.error("Ошибка отправки:", error);
+            alert("Что-то пошло не так. Попробуйте снова.");
+        });
 }
