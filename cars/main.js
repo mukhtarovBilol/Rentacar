@@ -194,91 +194,124 @@ getTitle = cardTitle.innerText
 
 // date
 
+// Инициализация переменных
+var startInputHours = 0;
+var endInputHours = 0;
 var time = "00"; // для email
 var endTime = "00"; // для email
 
-$(document).ready(function() {
-    // Инициализация переменных
-    let startInputHours = 0;
-    let endInputHours = 0;
+// Устанавливаем сегодняшнюю дату как минимальную для получения и возврата
+var today = new Date().toISOString().split('T')[0];
+document.getElementById("start_date").min = today;
+document.getElementById("end_date").min = today;
 
-    // Устанавливаем сегодняшнюю дату как минимальную для получения и возврата
-    const today = new Date().toISOString().split('T')[0];
-    $('#start_date').attr('min', today);
-    $('#end_date').attr('min', today);
+function calculate() {
+    var startDate = new Date(document.getElementById("start_date").value);
+    var endDate = new Date(document.getElementById("end_date").value);
 
-    function calculate() {
-        const startDate = new Date($('#start_date').val());
-        const endDate = new Date($('#end_date').val());
+    // Количество дней аренды
+    var differenceInTime = endDate.getTime() - startDate.getTime();
+    var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх
 
-        // Количество дней аренды
-        const differenceInTime = endDate.getTime() - startDate.getTime();
-        let differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх
-
-        // Учитываем, если время начала меньше времени окончания
-        if (startInputHours <= endInputHours) {
-            differenceInDays++;
-        }
-
-        calculateRentalCost(differenceInDays);
+    // Учитываем, если время начала меньше времени окончания
+    if (startInputHours <= endInputHours) {
+        differenceInDays++;
     }
 
-    function checkButtonState() {
-        const startDate = $('#start_date').val();
-        const endDate = $('#end_date').val();
-        const startTime = $('#start').val();
-        const endTime = $('#end').val();
+    calculateRentalCost(differenceInDays);
+}
 
-        let isButtonEnabled = startDate && endDate && startTime && endTime;
+function checkButtonState() {
+    var startDate = document.getElementById("start_date").value;
+    var endDate = document.getElementById("end_date").value;
+    var startTime = document.getElementById("start").value;
+    var endTime = document.getElementById("end").value;
 
-        // Проверяем, что даты не в прошлом и дата окончания больше даты начала
-        if (isButtonEnabled) {
-            const today = new Date().setHours(0, 0, 0, 0);
-            const selectedStartDate = new Date(startDate + 'T' + startTime);
-            const selectedEndDate = new Date(endDate + 'T' + endTime);
+    var isButtonEnabled = startDate && endDate && startTime && endTime;
 
-            // Условие проверки
-            if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
-                isButtonEnabled = false;
-            }
+    // Проверяем, что даты не в прошлом и дата окончания больше даты начала
+    if (isButtonEnabled) {
+        var today = new Date().setHours(0, 0, 0, 0);
+        var selectedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
+        var selectedEndDate = new Date(endDate).setHours(0, 0, 0, 0);
+        
+        // Условие проверки
+        if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
+            isButtonEnabled = false;
         }
-
-        $('#submitButton').prop('disabled', !isButtonEnabled);
     }
 
-    $('#start').on('change', function() {
-        const startInput = $(this).val().split(':');
-        startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
+    var submitButton = document.getElementById("submitButton");
+    if (submitButton) {
+        submitButton.disabled = !isButtonEnabled;
+    }
+}
 
-        $('#end_date').prop('disabled', false); // Активируем выбор даты возврата
-        checkButtonState();
-    });
+document.getElementById("start").addEventListener("change", function () {
+    var startInput = this.value.split(":");
+    startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
+    time = this.value;
 
-    $('#end').on('change', function() {
-        const endInput = $(this).val().split(':');
-        endInputHours = Number(endInput[0]);
-
-        calculate();
-        checkButtonState();
-    });
-
-    $('#start_date').on('change', function() {
-        const startDate = new Date($(this).val());
-        const nextDay = new Date(startDate);
-        nextDay.setDate(startDate.getDate() + 2);
-        $('#end_date').attr('min', nextDay.toISOString().split('T')[0]);
-        checkButtonState(); // Проверяем состояние кнопки
-    });
-
-    $('#end_date').on('change', function() {
-        $('#end').prop('disabled', false); // Активируем выбор времени возврата
-        checkButtonState(); // Проверяем состояние кнопки
-    });
-
-    // Дополнительные проверки при вводе даты
-    $('#start_date, #end_date').on('input', checkButtonState);
-
+    document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
+    checkButtonState();
 });
+
+document.getElementById("end").addEventListener("change", function () {
+    var endInput = this.value.split(":");
+    endInputHours = Number(endInput[0]);
+    endTime = this.value;
+
+    calculate();
+    checkButtonState();
+});
+
+document.getElementById("start_date").addEventListener("change", function () {
+    var selectedStartDate = new Date(this.value);
+    var today = new Date();
+    today.setHours(0, 0, 0, 0); // Сбрасываем время для корректного сравнения
+
+    // Если дата начала меньше сегодняшней даты
+    if (selectedStartDate < today) {
+        alert("Вы не можете выбрать прошедшую дату.");
+        this.value = today.toISOString().split('T')[0]; // Устанавливаем минимально допустимую дату
+        selectedStartDate = new Date(this.value); // Обновляем выбранную дату
+    }
+
+    // Устанавливаем минимальную дату возврата как +2 дня от даты получения
+    var minimumReturnDate = new Date(selectedStartDate);
+    minimumReturnDate.setDate(minimumReturnDate.getDate() + 2); // Добавляем 2 дня
+    document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
+
+    // Если текущая дата возврата меньше минимальной, сбрасываем её
+    var currentEndDate = new Date(document.getElementById("end_date").value);
+    if (currentEndDate < minimumReturnDate) {
+        document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
+    }
+
+    checkButtonState(); // Проверяем состояние кнопки
+});
+
+document.getElementById("end_date").addEventListener("change", function () {
+    var selectedEndDate = new Date(this.value);
+    var selectedStartDate = new Date(document.getElementById("start_date").value);
+    document.getElementById("end").disabled = false
+    selectedStartDate.setHours(0, 0, 0, 0); // Сбрасываем время
+
+    // Проверка: дата возврата должна быть минимум на 2 дня позже даты получения
+    var minimumReturnDate = new Date(selectedStartDate);
+    minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
+
+    if (selectedEndDate < minimumReturnDate) {
+        alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
+        this.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем минимально допустимую дату
+    }
+
+    checkButtonState(); // Проверяем состояние кнопки
+});
+
+// Дополнительные проверки при вводе даты
+document.getElementById("start_date").addEventListener("input", checkButtonState);
+document.getElementById("end_date").addEventListener("input", checkButtonState);
 
 var prices = 0;
 
