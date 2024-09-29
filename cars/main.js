@@ -197,24 +197,23 @@ getTitle = cardTitle.innerText
 var time = "00"; // для email
 var endTime = "00"; // для email
 
-
 $(document).ready(function() {
     // Инициализация переменных
-    var startInputHours = 0;
-    var endInputHours = 0;
+    let startInputHours = 0;
+    let endInputHours = 0;
 
     // Устанавливаем сегодняшнюю дату как минимальную для получения и возврата
-    var today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
     $('#start_date').attr('min', today);
     $('#end_date').attr('min', today);
 
     function calculate() {
-        var startDate = new Date($('#start_date').val());
-        var endDate = new Date($('#end_date').val());
+        const startDate = new Date($('#start_date').val());
+        const endDate = new Date($('#end_date').val());
 
         // Количество дней аренды
-        var differenceInTime = endDate.getTime() - startDate.getTime();
-        var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх
+        const differenceInTime = endDate.getTime() - startDate.getTime();
+        let differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх
 
         // Учитываем, если время начала меньше времени окончания
         if (startInputHours <= endInputHours) {
@@ -225,18 +224,18 @@ $(document).ready(function() {
     }
 
     function checkButtonState() {
-        var startDate = $('#start_date').val();
-        var endDate = $('#end_date').val();
-        var startTime = $('#start').val();
-        var endTime = $('#end').val();
+        const startDate = $('#start_date').val();
+        const endDate = $('#end_date').val();
+        const startTime = $('#start').val();
+        const endTime = $('#end').val();
 
-        var isButtonEnabled = startDate && endDate && startTime && endTime;
+        let isButtonEnabled = startDate && endDate && startTime && endTime;
 
         // Проверяем, что даты не в прошлом и дата окончания больше даты начала
         if (isButtonEnabled) {
-            var today = new Date().setHours(0, 0, 0, 0);
-            var selectedStartDate = new Date(startDate + 'T' + startTime);
-            var selectedEndDate = new Date(endDate + 'T' + endTime);
+            const today = new Date().setHours(0, 0, 0, 0);
+            const selectedStartDate = new Date(startDate + 'T' + startTime);
+            const selectedEndDate = new Date(endDate + 'T' + endTime);
 
             // Условие проверки
             if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
@@ -248,7 +247,7 @@ $(document).ready(function() {
     }
 
     $('#start').on('change', function() {
-        var startInput = $(this).val().split(':');
+        const startInput = $(this).val().split(':');
         startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
 
         $('#end_date').prop('disabled', false); // Активируем выбор даты возврата
@@ -256,7 +255,7 @@ $(document).ready(function() {
     });
 
     $('#end').on('change', function() {
-        var endInput = $(this).val().split(':');
+        const endInput = $(this).val().split(':');
         endInputHours = Number(endInput[0]);
 
         calculate();
@@ -264,8 +263,8 @@ $(document).ready(function() {
     });
 
     $('#start_date').on('change', function() {
-        var startDate = new Date($(this).val());
-        var nextDay = new Date(startDate);
+        const startDate = new Date($(this).val());
+        const nextDay = new Date(startDate);
         nextDay.setDate(startDate.getDate() + 2);
         $('#end_date').attr('min', nextDay.toISOString().split('T')[0]);
         checkButtonState(); // Проверяем состояние кнопки
@@ -278,12 +277,8 @@ $(document).ready(function() {
 
     // Дополнительные проверки при вводе даты
     $('#start_date, #end_date').on('input', checkButtonState);
-});
 
-function calculateRentalCost(days) {
-    // Логика расчета стоимости аренды
-    console.log("Количество дней аренды: " + days);
-}
+});
 
 var prices = 0;
 
