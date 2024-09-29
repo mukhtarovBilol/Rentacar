@@ -268,21 +268,25 @@ document.getElementById("end").addEventListener("change", function () {
 document.getElementById("start_date").addEventListener("change", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
-    today.setHours(0, 0, 0, 0); // Сбрасываем время для корректного сравнения
+    today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     // Если дата начала меньше сегодняшней даты
     if (selectedStartDate < today) {
         alert("Вы не можете выбрать прошедшую дату.");
         this.value = today.toISOString().split('T')[0]; // Устанавливаем минимально допустимую дату
         selectedStartDate = new Date(this.value); // Обновляем выбранную дату
+
+        // Снова открываем окно выбора даты
+        this.focus();
+        this.click();
     }
 
     // Устанавливаем минимальную дату возврата как +2 дня от даты получения
     var minimumReturnDate = new Date(selectedStartDate);
-    minimumReturnDate.setDate(minimumReturnDate.getDate() + 2); // Добавляем 2 дня
+    minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
 
-    // Если текущая дата возврата меньше минимальной, сбрасываем её
+    // Если дата возврата меньше минимальной, сбрасываем её
     var currentEndDate = new Date(document.getElementById("end_date").value);
     if (currentEndDate < minimumReturnDate) {
         document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
@@ -294,8 +298,7 @@ document.getElementById("start_date").addEventListener("change", function () {
 document.getElementById("end_date").addEventListener("change", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
-    document.getElementById("end").disabled = false
-    selectedStartDate.setHours(0, 0, 0, 0); // Сбрасываем время
+    selectedStartDate.setHours(0, 0, 0, 0); // Убираем время
 
     // Проверка: дата возврата должна быть минимум на 2 дня позже даты получения
     var minimumReturnDate = new Date(selectedStartDate);
@@ -304,10 +307,15 @@ document.getElementById("end_date").addEventListener("change", function () {
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
         this.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем минимально допустимую дату
+
+        // Снова открываем окно выбора даты
+        this.focus();
+        this.click();
     }
 
     checkButtonState(); // Проверяем состояние кнопки
 });
+
 
 // Дополнительные проверки при вводе даты
 document.getElementById("start_date").addEventListener("input", checkButtonState);
