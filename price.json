@@ -1,0 +1,988 @@
+{
+    "BMW G30 5 series 2020": [
+        {
+            "id": "1",
+            "title": "RENT BMW G30 5 series 2020",
+            "day": "2-7 days",
+            "price": 250,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "RENT BMW G30 5 series 2020",
+            "day": "8-20 days",
+            "price": 210,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "RENT BMW G30 5 series 2020",
+            "day": "21+ days",
+            "price": 150,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "BMW X5 2022": [
+        {
+            "id": "1",
+            "title": "Rent BMW X5 2022",
+            "day": "2-7 days",
+            "price": 350,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent BMW X5 2022",
+            "day": "8-20 days",
+            "price": 310,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent BMW X5 2022",
+            "day": "21+ days",
+            "price": 250,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "BMW X7 2022": [
+        {
+            "id": "1",
+            "title": "Rent BMW X7 2022",
+            "day": "2-7 days",
+            "price": 450,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent BMW X7 2022",
+            "day": "8-20 days",
+            "price": 400,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent BMW X7 2022",
+            "day": "21+ days",
+            "price": 280,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Ford Mustang 2020": [
+        {
+            "id": "1",
+            "title": "Rent Ford Mustang 2020",
+            "day": "2-7 days",
+            "price": 250,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Ford Mustang 2020",
+            "day": "8-20 days",
+            "price": 240,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Ford Mustang 2020",
+            "day": "21+ days",
+            "price": 145,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Accent 2021": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Accent 2021",
+            "day": "2-7 days",
+            "price": 75,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Accent 2021",
+            "day": "8-20 days",
+            "price": 65,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Accent 2021",
+            "day": "21+ days",
+            "price": 50,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Elantra 2018": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Elantra 2018",
+            "day": "2-7 days",
+            "price": 65,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Elantra 2018",
+            "day": "8-20 days",
+            "price": 60,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Elantra 2018",
+            "day": "21+ days",
+            "price": 50,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Elantra 2020": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Elantra 2020",
+            "day": "2-7 days",
+            "price": 75,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Elantra 2020",
+            "day": "8-20 days",
+            "price": 70,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Elantra 2020",
+            "day": "21+ days",
+            "price": 60,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Elantra 2023": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Elantra 2023",
+            "day": "2-7 days",
+            "price": 85,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Elantra 2023",
+            "day": "8-20 days",
+            "price": 80,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Elantra 2023",
+            "day": "21+ days",
+            "price": 65,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Kona 2021": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Kona 2021",
+            "day": "2-7 days",
+            "price": 95,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Kona 2021",
+            "day": "8-20 days",
+            "price": 90,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Kona 2021",
+            "day": "21+ days",
+            "price": 75,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Santa Fe 2021": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Santa Fe 2021",
+            "day": "2-7 days",
+            "price": 145,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Santa Fe 2021",
+            "day": "8-20 days",
+            "price": 130,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Santa Fe 2021",
+            "day": "21+ days",
+            "price": 115,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Sonata 2017": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Sonata 2017",
+            "day": "2-7 days",
+            "price": 80,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Sonata 2017",
+            "day": "8-20 days",
+            "price": 75,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Sonata 2017",
+            "day": "21+ days",
+            "price": 65,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Sonata 2021-2023": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Sonata 2021-2023",
+            "day": "2-7 days",
+            "price": 135,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Sonata 2021-2023",
+            "day": "8-20 days",
+            "price": 125,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Sonata 2021-2023",
+            "day": "21+ days",
+            "price": 90,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Staria 2023": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Staria 2023",
+            "day": "2-7 days",
+            "price": 190,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Staria 2023",
+            "day": "8-20 days",
+            "price": 170,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Staria 2023",
+            "day": "21+ days",
+            "price": 150,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Tucson 2021": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Tucson 2021",
+            "day": "2-7 days",
+            "price": 95,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Tucson 2021",
+            "day": "8-20 days",
+            "price": 90,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Tucson 2021",
+            "day": "21+ days",
+            "price": 75,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+    "Hyundai Tucson 2023": [
+        {
+            "id": "1",
+            "title": "Rent Hyundai Tucson 2023",
+            "day": "2-7 days",
+            "price": 135,
+            "currency": "AZN",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün"
+        },
+        {
+            "id": "2",
+            "title": "Rent Hyundai Tucson 2023",
+            "day": "8-20 days",
+            "price": 120,
+            "currency": "AZN",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün"
+        },
+        {
+            "id": "3",
+            "title": "Rent Hyundai Tucson 2023",
+            "day": "21+ days",
+            "price": 95,
+            "currency": "AZN",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün"
+        }
+    ],
+   "Kia Cerato 2016": [
+        {
+            "id": "1",
+            "title": "Rent KIA Cerato 2016",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 60,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent KIA Cerato 2016",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 55,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent KIA Cerato 2016",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 40,
+            "currency": "AZN"
+        }
+    ],
+    "Kia Forte 2018": [
+        {
+            "id": "1",
+            "title": "Rent Kia Forte 2018",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 65,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Kia Forte 2018",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 60,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Kia Forte 2018",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 50,
+            "currency": "AZN"
+        }
+    ],
+    "Kia K5 2021-2023": [
+        {
+            "id": "1",
+            "title": "Rent Kia K5 2021-2023",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 135,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Kia K5 2021-2023",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 125,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Kia K5 2021-2023",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 90,
+            "currency": "AZN"
+        }
+    ],
+    "Kia Optima 2018": [
+        {
+            "id": "1",
+            "title": "Rent Kia Optima 2018",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 90,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Kia Optima 2018",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 85,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Kia Optima 2018",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 65,
+            "currency": "AZN"
+        }
+    ],
+    "Kia Rio 2021": [
+        {
+            "id": "1",
+            "title": "Rent Kia Rio 2021",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 75,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Kia Rio 2021",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 70,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Kia Rio 2021",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 50,
+            "currency": "AZN"
+        }
+    ],
+    "Kia Sorento 2023": [
+        {
+            "id": "1",
+            "title": "Rent KIA Sorento 2023",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 170,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent KIA Sorento 2023",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 160,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent KIA Sorento 2023",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 120,
+            "currency": "AZN"
+        }
+    ],
+    "Kia Sportage 2023": [
+        {
+            "id": "1",
+            "title": "Rent Kia Sportage 2023",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 140,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Kia Sportage 2023",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 130,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Kia Sportage 2023",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 95,
+            "currency": "AZN"
+        }
+    ],
+    "Kia Sportage 2021": [
+        {
+            "id": "1",
+            "title": "Rent Kia Sportage 2021",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 110,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Kia Sportage 2021",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 100,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Kia Sportage 2021",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 85,
+            "currency": "AZN"
+        }
+    ],
+    "Toyota Land Cruiser 2015": [
+        {
+            "id": "1",
+            "title": "Rent Toyota Land Cruiser 2015",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 150,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Toyota Land Cruiser 2015",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 140,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Toyota Land Cruiser 2015",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 125,
+            "currency": "AZN"
+        }
+    ],
+    "Mercedes Benz S-class 2017": [
+        {
+            "id": "1",
+            "title": "Rent Mercedes Benz S-class 2017",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 350,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Mercedes Benz S-class 2017",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 330,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Mercedes Benz S-class 2017",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 240,
+            "currency": "AZN"
+        }
+    ],
+    "Mercedes Benz V-class 2019": [
+        {
+            "id": "1",
+            "title": "Rent Mercedes Benz V-class 2019",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 220,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Rent Mercedes Benz V-class 2019",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 200,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Rent Mercedes Benz V-class 2019",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 160,
+            "currency": "AZN"
+        }
+    ],
+    "Mitsubishi Pajero Sport 2022": [
+        {
+            "id": "1",
+            "title": "Mitsubishi Pajero Sport 2022",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 170,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Mitsubishi Pajero Sport 2022",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 160,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Mitsubishi Pajero Sport 2022",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 120,
+            "currency": "AZN"
+        }
+    ],
+    "Range Rover Vogue 2016": [
+        {
+            "id": "1",
+            "title": "Range Rover Vogue 2016",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 300,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Range Rover Vogue 2016",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 280,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Range Rover Vogue 2016",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 210,
+            "currency": "AZN"
+        }
+    ],
+    "Range Rover Vogue 2020": [
+        {
+            "id": "1",
+            "title": "Range Rover Vogue 2020",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 450,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Range Rover Vogue 2020",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 410,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Range Rover Vogue 2020",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 250,
+            "currency": "AZN"
+        }
+    ],
+    "Toyota Camry 2020": [
+        {
+            "id": "1",
+            "title": "Toyota Camry 2020",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 135,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Toyota Camry 2020",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 125,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Toyota Camry 2020",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 95,
+            "currency": "AZN"
+        }
+    ],
+    "Toyota Corolla 2018": [
+        {
+            "id": "1",
+            "title": "Toyota Corolla 2018",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 85,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Toyota Corolla 2018",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 80,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Toyota Corolla 2018",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 65,
+            "currency": "AZN"
+        }
+    ],
+    "Toyota Corolla 2023": [
+        {
+            "id": "1",
+            "title": "Toyota Corolla 2023",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 100,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Toyota Corolla 2023",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 90,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Toyota Corolla 2023",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 75,
+            "currency": "AZN"
+        }
+    ],
+    "Toyota Prado 2015-2017": [
+        {
+            "id": "1",
+            "title": "Toyota Prado 2015-2017",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 125,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Toyota Prado 2015-2017",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 115,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Toyota Prado 2015-2017",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 100,
+            "currency": "AZN"
+        }
+    ],
+    "Toyota Prado 2020": [
+        {
+            "id": "1",
+            "title": "Toyota Prado 2020",
+            "day": "2-7 days",
+            "russiaDays": "2-7 дней",
+            "azDays": "2-7 gün",
+            "price": 210,
+            "currency": "AZN"
+        },
+        {
+            "id": "2",
+            "title": "Toyota Prado 2020",
+            "day": "8-20 days",
+            "russiaDays": "8-20 дней",
+            "azDays": "8-20 gün",
+            "price": 190,
+            "currency": "AZN"
+        },
+        {
+            "id": "3",
+            "title": "Toyota Prado 2020",
+            "day": "21+ days",
+            "russiaDays": "21+ дней",
+            "azDays": "21+ gün",
+            "price": 160,
+            "currency": "AZN"
+        }
+    ]
+}

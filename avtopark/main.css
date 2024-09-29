@@ -1,0 +1,4 @@
+.cars__cards-title {
+    font-size: clamp(23px, 3vw, 35px);
+    padding: 20px 0 30px 0;
+}

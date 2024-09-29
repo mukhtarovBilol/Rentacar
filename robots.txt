@@ -1,0 +1,4 @@
+User-agent: *
+
+Host: https://getrentacar.az
+Sitemap: https://getrentacar.az/sitemap.xml

@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+.container {
+    max-width: 1500px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+}

@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# Перенаправление index.html на /azerbaijan/ с учетом HTTPS
+RewriteCond %{HTTPS} on
+RewriteRule ^index\.html$ https://getrentacar.az/azerbaijan/ [R=301,L]
+
+# Перенаправление с www на без www и добавление пути /azerbaijan/
+RewriteCond %{HTTP_HOST} ^www\.getrentacar\.az$ [NC]
+RewriteRule ^(.*)$ https://getrentacar.az/azerbaijan/$1 [L,R=301]
+
+# Удаление #! из URL-адресов
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=(.*)$
+RewriteRule ^(.*)$ /%1? [R=301,L]
+
+# Переадресация с http на https
+RewriteCond %{HTTPS} =off 
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
