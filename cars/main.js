@@ -320,9 +320,10 @@ document.getElementById("end_date").addEventListener("input", function () {
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
         this.value = ""; // Очищаем поле возврата
+    } else {
+        calculate(); // Вызываем калькуляцию только если дата корректная
     }
 
-    calculate();
     checkButtonState();
 });
 
