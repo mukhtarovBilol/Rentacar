@@ -314,7 +314,6 @@ document.getElementById("start_date").addEventListener("input", function () {
 document.getElementById("end_date").addEventListener("input", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
-    document.getElementById("end").disabled = false; // Активируем выбор даты возврата
     selectedStartDate.setHours(0, 0, 0, 0);
 
     // Минимальная дата возврата должна быть на 2 дня позже даты получения
