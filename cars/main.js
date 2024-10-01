@@ -289,9 +289,12 @@ document.getElementById("start_date").addEventListener("input", function () {
     document.getElementById("start").disabled = false; // Активируем выбор даты возврата
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
+    // Если дата начала меньше сегодняшней даты
     if (selectedStartDate < today) {
         alert("Вы не можете выбрать прошедшую дату.");
-        this.value = today.toISOString().split('T')[0]; // Устанавливаем значение на сегодняшнюю дату
+        this.value = ""; // Очищаем поле
+        document.getElementById("end_date").value = ""; // Очищаем поле возврата
+        checkButtonState();
         return;
     }
 
@@ -310,12 +313,13 @@ document.getElementById("end_date").addEventListener("input", function () {
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     selectedStartDate.setHours(0, 0, 0, 0);
     document.getElementById("end").disabled = false; // Активируем выбор даты возврата
+
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
 
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-        this.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем минимально допустимую дату
+        this.value = ""; // Очищаем поле возврата
     }
 
     calculate();
@@ -325,7 +329,7 @@ document.getElementById("end_date").addEventListener("input", function () {
 function resetEndDateIfInvalid(minimumReturnDate) {
     var currentEndDate = new Date(document.getElementById("end_date").value);
     if (currentEndDate < minimumReturnDate) {
-        document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
+        document.getElementById("end_date").value = ""; // Очищаем поле возврата
     }
 }
 
@@ -340,6 +344,7 @@ function openDatePicker(element) {
 
 document.getElementById("start_date").addEventListener("input", checkButtonState);
 document.getElementById("end_date").addEventListener("input", checkButtonState);
+
 
 var prices = 0;
 
