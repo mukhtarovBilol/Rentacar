@@ -325,8 +325,8 @@ document.getElementById("end_date").addEventListener("input", function () {
     // Если дата возврата меньше минимальной, заменяем её на правильную дату
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-        // Автоматически устанавливаем минимально допустимую дату
-        this.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем правильную дату
+        // Устанавливаем правильную дату (на 2 дня позже даты получения)
+        this.value = minimumReturnDate.toISOString().split('T')[0];
     }
 
     checkButtonState();
