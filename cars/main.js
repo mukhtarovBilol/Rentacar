@@ -288,6 +288,7 @@ document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
     document.getElementById("start").disabled = false; // Активируем выбор даты возврата
+
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     // Если дата начала меньше сегодняшней даты
@@ -324,7 +325,7 @@ document.getElementById("end_date").addEventListener("input", function () {
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
         // Автоматически устанавливаем минимально допустимую дату
-        this.value = minimumReturnDate.toISOString().split('T')[0];
+        this.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем правильную дату
     }
 
     checkButtonState();
@@ -341,6 +342,7 @@ function openDatePicker(element) {
 
 document.getElementById("start_date").addEventListener("input", checkButtonState);
 document.getElementById("end_date").addEventListener("input", checkButtonState);
+
 
 
 var prices = 0;
