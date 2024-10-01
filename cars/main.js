@@ -286,7 +286,6 @@ document.getElementById("end").addEventListener("change", function () {
 document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
-    document.getElementById("start").disabled = false; // Активируем выбор даты возврата
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     if (selectedStartDate < today) {
@@ -295,6 +294,7 @@ document.getElementById("start_date").addEventListener("input", function () {
         return;
     }
 
+    // Устанавливаем минимально допустимую дату возврата (на 2 дня позже)
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
@@ -308,13 +308,13 @@ document.getElementById("end_date").addEventListener("input", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     selectedStartDate.setHours(0, 0, 0, 0);
-    document.getElementById("end").disabled = false; // Активируем выбор даты возврата
+
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
 
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-        this.value = minimumReturnDate.toISOString().split('T')[0];
+        this.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем минимально допустимую дату
     }
 
     calculate();
