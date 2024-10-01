@@ -295,7 +295,8 @@ document.getElementById("start_date").addEventListener("input", function () {
     if (selectedStartDate < today) {
         alert("Вы не можете выбрать прошедшую дату.");
         this.value = ""; // Очищаем поле
-        return;
+        document.getElementById("end_date").value = ""; // Очищаем поле возврата
+        return openDatePicker(this); // Открываем выбор даты
     }
 
     // Устанавливаем минимально допустимую дату возврата (на 2 дня позже)
