@@ -314,16 +314,18 @@ document.getElementById("start_date").addEventListener("input", function () {
 document.getElementById("end_date").addEventListener("input", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
+    document.getElementById("end").disabled = false; // Активируем выбор даты возврата
     selectedStartDate.setHours(0, 0, 0, 0);
 
     // Минимальная дата возврата должна быть на 2 дня позже даты получения
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
 
-    // Если дата возврата меньше минимальной, очищаем поле и показываем предупреждение
+    // Если дата возврата меньше минимальной, заменяем её на правильную дату
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-        this.value = ""; // Очищаем поле возврата
+        // Автоматически устанавливаем минимально допустимую дату
+        this.value = minimumReturnDate.toISOString().split('T')[0];
     }
 
     checkButtonState();
