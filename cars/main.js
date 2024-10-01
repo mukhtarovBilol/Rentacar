@@ -293,8 +293,6 @@ document.getElementById("start_date").addEventListener("input", function () {
     if (selectedStartDate < today) {
         alert("Вы не можете выбрать прошедшую дату.");
         this.value = ""; // Очищаем поле
-        document.getElementById("end_date").value = ""; // Очищаем поле возврата
-        checkButtonState();
         return;
     }
 
@@ -303,42 +301,28 @@ document.getElementById("start_date").addEventListener("input", function () {
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
 
-    resetEndDateIfInvalid(minimumReturnDate);
     checkButtonState();
     setTimeout(() => openDatePicker(this), 0);
 });
 
 document.getElementById("end_date").addEventListener("input", function () {
-    // Проверяем, выбрана ли дата возврата
     if (!this.value) {
-        return; // Выход из функции, если дата не выбрана
+        return; // Прекращаем выполнение, если дата еще не выбрана
     }
 
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     selectedStartDate.setHours(0, 0, 0, 0);
-    document.getElementById("end").disabled = false; // Активируем выбор времени возврата
-
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
 
-    // Проверяем, что дата возврата минимум на 2 дня позже даты начала
+    // Проверяем, что дата возврата не меньше минимальной
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-        this.value = ""; // Очищаем поле возврата
-    } else {
-        calculate(); // Вызываем калькуляцию только если дата корректная
     }
 
     checkButtonState();
 });
-
-function resetEndDateIfInvalid(minimumReturnDate) {
-    var currentEndDate = new Date(document.getElementById("end_date").value);
-    if (currentEndDate && currentEndDate < minimumReturnDate) {
-        document.getElementById("end_date").value = ""; // Очищаем поле возврата
-    }
-}
 
 function openDatePicker(element) {
     if (typeof element.showPicker === 'function') {
