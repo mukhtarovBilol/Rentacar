@@ -288,6 +288,7 @@ document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
+    document.getElementById("start").disabled = false; // Активируем выбор даты возврата
 
     // Если дата начала меньше сегодняшней даты
     if (selectedStartDate < today) {
