@@ -283,10 +283,10 @@ document.getElementById("end").addEventListener("change", function () {
     checkButtonState();
 });
 
+// Обработка изменения даты получения
 document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
-    document.getElementById("start").disabled = false; // Активируем выбор времени получения
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     // Если дата начала меньше сегодняшней даты
@@ -299,27 +299,35 @@ document.getElementById("start_date").addEventListener("input", function () {
     // Устанавливаем минимально допустимую дату возврата (на 2 дня позже)
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
-    document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
+    
+    // Если дата возврата меньше минимальной, обновляем дату возврата
+    var endDateElement = document.getElementById("end_date");
+    var currentEndDate = new Date(endDateElement.value);
+    if (currentEndDate < minimumReturnDate) {
+        endDateElement.value = minimumReturnDate.toISOString().split('T')[0];
+    }
+
+    // Обновляем минимальную дату возврата
+    endDateElement.min = minimumReturnDate.toISOString().split('T')[0];
 
     checkButtonState();
     setTimeout(() => openDatePicker(this), 0);
 });
 
+// Обработка изменения даты возврата
 document.getElementById("end_date").addEventListener("input", function () {
-    if (!this.value) {
-        return; // Прекращаем выполнение, если дата еще не выбрана
-    }
-
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     selectedStartDate.setHours(0, 0, 0, 0);
+
+    // Минимальная дата возврата должна быть на 2 дня позже даты получения
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
 
-    // Проверяем, что дата возврата не меньше минимальной
+    // Если дата возврата меньше минимальной, корректируем ее
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-        this.value = minimumReturnDate.toISOString().split('T')[0]; // Автоматически устанавливаем минимальную дату
+        this.value = minimumReturnDate.toISOString().split('T')[0];
     }
 
     checkButtonState();
