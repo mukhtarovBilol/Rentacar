@@ -288,7 +288,6 @@ document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
     document.getElementById("start").disabled = false; // Активируем выбор даты возврата
-
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     // Если дата начала меньше сегодняшней даты
@@ -314,18 +313,18 @@ document.getElementById("start_date").addEventListener("input", function () {
 
 // Обработка изменения даты возврата
 document.getElementById("end_date").addEventListener("input", function () {
-    var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     selectedStartDate.setHours(0, 0, 0, 0);
-
+    
     // Минимальная дата возврата должна быть на 2 дня позже даты получения
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
-
-    // Если дата возврата меньше минимальной, заменяем её на правильную дату
+    
+    // Проверяем, если пользователь ввел неправильную дату возврата
+    var selectedEndDate = new Date(this.value);
     if (selectedEndDate < minimumReturnDate) {
         alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-        // Устанавливаем правильную дату (на 2 дня позже даты получения)
+        // Устанавливаем правильную дату возврата (на 2 дня позже даты получения)
         this.value = minimumReturnDate.toISOString().split('T')[0];
     }
 
