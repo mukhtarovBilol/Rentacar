@@ -286,7 +286,7 @@ document.getElementById("end").addEventListener("change", function () {
 document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
-    document.getElementById("start").disabled = false; // Активируем выбор даты возврата
+    document.getElementById("start").disabled = false; // Активируем выбор времени получения
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     // Если дата начала меньше сегодняшней даты
@@ -303,39 +303,31 @@ document.getElementById("start_date").addEventListener("input", function () {
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
 
-    resetEndDateIfInvalid(minimumReturnDate);
     checkButtonState();
     setTimeout(() => openDatePicker(this), 0);
 });
 
 document.getElementById("end_date").addEventListener("input", function () {
+    if (!this.value) return; // Проверяем, выбрана ли дата
+
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     selectedStartDate.setHours(0, 0, 0, 0);
-    document.getElementById("end").disabled = false; // Активируем выбор даты возврата
+    document.getElementById("end").disabled = false; // Активируем выбор времени возврата
 
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
 
-    // Проверяем, выбрана ли дата возврата
-    if (this.value) {
-        if (selectedEndDate < minimumReturnDate) {
-            alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-            this.value = ""; // Очищаем поле возврата
-        } else {
-            calculate(); // Вызываем калькуляцию только если дата корректная
-        }
+    // Проверяем, что дата возврата минимум на 2 дня позже даты начала
+    if (selectedEndDate < minimumReturnDate) {
+        alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
+        this.value = ""; // Очищаем поле возврата
+    } else {
+        calculate(); // Вызываем калькуляцию только если дата корректная
     }
 
     checkButtonState();
 });
-
-function resetEndDateIfInvalid(minimumReturnDate) {
-    var currentEndDate = new Date(document.getElementById("end_date").value);
-    if (currentEndDate < minimumReturnDate) {
-        document.getElementById("end_date").value = ""; // Очищаем поле возврата
-    }
-}
 
 function openDatePicker(element) {
     if (typeof element.showPicker === 'function') {
