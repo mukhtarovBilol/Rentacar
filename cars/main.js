@@ -287,7 +287,7 @@ document.getElementById("end").addEventListener("change", function () {
 document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
-    document.getElementById("start").disabled = false; // Активируем выбор даты возврата
+    document.getElementById("start").disabled = false; // Активируем выбор времени получения
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     // Если дата начала меньше сегодняшней даты
@@ -306,7 +306,10 @@ document.getElementById("start_date").addEventListener("input", function () {
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
 
     // Автоматически устанавливаем дату возврата на 2 дня позже
-    document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
+    // document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
+
+    // Вызываем расчет при изменении даты
+    calculate();
     
     checkButtonState();
 });
@@ -315,14 +318,13 @@ document.getElementById("start_date").addEventListener("input", function () {
 document.getElementById("end_date").addEventListener("input", function () {
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     selectedStartDate.setHours(0, 0, 0, 0);
-    document.getElementById("end").disabled = false; // Активируем выбор даты возврата
+    document.getElementById("end").disabled = false; // Активируем выбор времени возврата
     
     // Минимальная дата возврата должна быть на 2 дня позже даты получения
     var minimumReturnDate = new Date(selectedStartDate);
     minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
-    var min = new Date(selectedStartDate)
-    min.setDate(min.getDate() + 3)
-    
+    var min = new Date(selectedStartDate);
+    min.setDate(min.getDate() + 3);
     
     // Проверяем, если пользователь ввел неправильную дату возврата
     var selectedEndDate = new Date(this.value);
@@ -332,6 +334,9 @@ document.getElementById("end_date").addEventListener("input", function () {
         this.value = min.toISOString().split('T')[0];
     }
 
+    // Вызываем расчет при изменении даты
+    calculate();
+    
     checkButtonState();
 });
 
@@ -346,8 +351,6 @@ function openDatePicker(element) {
 
 document.getElementById("start_date").addEventListener("input", checkButtonState);
 document.getElementById("end_date").addEventListener("input", checkButtonState);
-
-
 
 var prices = 0;
 
