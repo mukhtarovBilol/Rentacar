@@ -240,6 +240,7 @@ function checkButtonState() {
 
     var isButtonEnabled = startDate && endDate && startTime && endTime;
 
+    
     // Проверяем, что даты не в прошлом и дата окончания больше даты начала
     if (isButtonEnabled) {
         var today = new Date().setHours(0, 0, 0, 0);
@@ -265,22 +266,25 @@ function enableNextField(currentField) {
     }
 }
 
+// Обработка изменения времени получения
 document.getElementById("start").addEventListener("change", function () {
     var startInput = this.value.split(":");
     startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
 
     document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
-    enableNextField(this); // Активируем следующее поле
-    checkButtonState();
+
+    // Проверяем наличие всех необходимых значений и вызываем calculate
+    checkAndCalculate();
 });
 
+// Обработка изменения времени возврата
 document.getElementById("end").addEventListener("change", function () {
     var endInput = this.value.split(":");
     endInputHours = Number(endInput[0]);
     endTime = this.value;
 
-    calculate();
-    checkButtonState();
+    // Проверяем наличие всех необходимых значений и вызываем calculate
+    checkAndCalculate();
 });
 
 // Обработка изменения даты получения
@@ -305,13 +309,8 @@ document.getElementById("start_date").addEventListener("input", function () {
     // Обновляем минимальную дату возврата
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
 
-    // Автоматически устанавливаем дату возврата на 2 дня позже
-    // document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
-
-    // Вызываем расчет при изменении даты
-    calculate();
-    
-    checkButtonState();
+    // Проверяем наличие всех необходимых значений и вызываем calculate
+    checkAndCalculate();
 });
 
 // Обработка изменения даты возврата
@@ -334,23 +333,22 @@ document.getElementById("end_date").addEventListener("input", function () {
         this.value = min.toISOString().split('T')[0];
     }
 
-    // Вызываем расчет при изменении даты
-    calculate();
-    
-    checkButtonState();
+    // Проверяем наличие всех необходимых значений и вызываем calculate
+    checkAndCalculate();
 });
 
-function openDatePicker(element) {
-    if (typeof element.showPicker === 'function') {
-        element.showPicker();
-    } else {
-        element.focus();
-        element.click();
+// Функция для проверки наличия всех значений и запуска расчета
+function checkAndCalculate() {
+    var startDate = document.getElementById("start_date").value;
+    var endDate = document.getElementById("end_date").value;
+    var startTime = document.getElementById("start").value;
+    var endTime = document.getElementById("end").value;
+
+    if (startDate && endDate && startTime && endTime) {
+        calculate();
     }
 }
 
-document.getElementById("start_date").addEventListener("input", checkButtonState);
-document.getElementById("end_date").addEventListener("input", checkButtonState);
 
 var prices = 0;
 
