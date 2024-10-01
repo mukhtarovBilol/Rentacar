@@ -304,11 +304,10 @@ document.getElementById("start_date").addEventListener("input", function () {
     // Обновляем минимальную дату возврата
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
 
-    // Очищаем поле даты возврата, если оно установлено ранее
-    document.getElementById("end_date").value = "";
+    // Автоматически устанавливаем дату возврата на 2 дня позже
+    document.getElementById("end_date").value = minimumReturnDate.toISOString().split('T')[0];
     
     checkButtonState();
-    setTimeout(() => openDatePicker(this), 0);
 });
 
 // Обработка изменения даты возврата
@@ -316,7 +315,6 @@ document.getElementById("end_date").addEventListener("input", function () {
     var selectedEndDate = new Date(this.value);
     var selectedStartDate = new Date(document.getElementById("start_date").value);
     selectedStartDate.setHours(0, 0, 0, 0);
-    document.getElementById("end").disabled = false; // Активируем выбор даты возврата
 
     // Минимальная дата возврата должна быть на 2 дня позже даты получения
     var minimumReturnDate = new Date(selectedStartDate);
