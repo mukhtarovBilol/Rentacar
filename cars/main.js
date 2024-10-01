@@ -309,6 +309,14 @@ document.getElementById("start_date").addEventListener("input", function () {
     // Обновляем минимальную дату возврата
     document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
 
+    // Если дата возврата уже установлена и она меньше минимально допустимой, то обновляем её
+    var endDateInput = document.getElementById("end_date");
+    var selectedEndDate = new Date(endDateInput.value);
+
+    if (selectedEndDate < minimumReturnDate) {
+        endDateInput.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем новую дату возврата
+    }
+
     // Проверяем наличие всех необходимых значений и вызываем calculate
     checkAndCalculate();
 });
