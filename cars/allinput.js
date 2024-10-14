@@ -95,15 +95,18 @@ headerLink.addEventListener("click", function () {
 document.getElementById("start_date").addEventListener("input", function () {
     var selectedStartDate = new Date(this.value);
     var today = new Date();
+    var now = new Date();
+    var currentDate = now.toISOString().split("T")[0]; // Текущая дата в формате YYYY-MM-DD
+    var selectedDate = document.getElementById("start_date").value; // Получаем выбранную дату
+    
     document.getElementById("start").disabled = false; // Активируем выбор времени получения
     today.setHours(0, 0, 0, 0); // Убираем время для сравнения
 
     // Если дата начала меньше сегодняшней даты
-    if (selectedStartDate < today) {
+    if (selectedDate < currentDate) {
         alert("You cannot select a past date.");
-        this.value = min.toISOString().split('T')[0];
+        this.value = ""
         document.getElementById("end_date").value = ""; // Очищаем поле возврата
-        return openDatePicker(this); // Открываем выбор даты
     }
 
     // Устанавливаем минимально допустимую дату возврата (на 2 дня позже)

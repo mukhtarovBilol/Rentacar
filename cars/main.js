@@ -273,7 +273,6 @@ document.getElementById("start").addEventListener("change", function () {
     var startInputHours2 = Number(startInput[0]); // Учитываем часовой пояс
 
 
-
     // Получаем текущее время и дату
     var now = new Date();
     var currentDate = now.toISOString().split("T")[0]; // Текущая дата в формате YYYY-MM-DD
@@ -289,18 +288,20 @@ document.getElementById("start").addEventListener("change", function () {
     var currentHours = now.getHours();
     var currentMinutes = now.getMinutes();
 
-    // Проверяем, выбрано ли время в прошлом
-    // Если выбрана текущая дата, проверяем, что время не в прошлом
-    if (startInputHours2 < currentHours ||
-        (startInputHours2 === currentHours && Number(startInput[1]) < currentMinutes)) {
-        alert("Select a time no earlier than current.");
-        this.value = ""; // Сбрасываем значение
-        return;
-    } else {
-        // Если дата в будущем, разрешаем любое время
-        document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
-        var startTime = document.getElementById("start").value;
-        time = startTime
+    if (selectedDate == currentDate) {
+        // Проверяем, выбрано ли время в прошлом
+        // Если выбрана текущая дата, проверяем, что время не в прошлом
+        if (startInputHours2 < currentHours ||
+            (startInputHours2 === currentHours && Number(startInput[1]) < currentMinutes)) {
+            alert("Select a time no earlier than current.");
+            this.value = ""; // Сбрасываем значение
+            return;
+        } else {
+            // Если дата в будущем, разрешаем любое время
+            document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
+            var startTime = document.getElementById("start").value;
+            time = startTime
+        }
     }
 
 
