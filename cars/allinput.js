@@ -90,3 +90,61 @@ headerLink.addEventListener("click", function () {
         highlightFields(); // Подсвечиваем пустые поля красным бордером
     }
 });
+
+// Обработка изменения даты получения
+document.getElementById("start_date").addEventListener("input", function () {
+    var selectedStartDate = new Date(this.value);
+    var today = new Date();
+    document.getElementById("start").disabled = false; // Активируем выбор времени получения
+    today.setHours(0, 0, 0, 0); // Убираем время для сравнения
+
+    // Если дата начала меньше сегодняшней даты
+    if (selectedStartDate < today) {
+        alert("You cannot select a past date.");
+        this.value = min.toISOString().split('T')[0];
+        document.getElementById("end_date").value = ""; // Очищаем поле возврата
+        return openDatePicker(this); // Открываем выбор даты
+    }
+
+    // Устанавливаем минимально допустимую дату возврата (на 2 дня позже)
+    var minimumReturnDate = new Date(selectedStartDate);
+    minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
+    
+    // Обновляем минимальную дату возврата
+    document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
+
+    // Если дата возврата уже установлена и она меньше минимально допустимой, то обновляем её
+    var endDateInput = document.getElementById("end_date");
+    var selectedEndDate = new Date(endDateInput.value);
+
+    if (selectedEndDate < minimumReturnDate) {
+        endDateInput.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем новую дату возврата
+    }
+
+    // Проверяем наличие всех необходимых значений и вызываем calculate
+    checkAndCalculate();
+});
+
+// Обработка изменения даты возврата
+document.getElementById("end_date").addEventListener("input", function () {
+    var selectedStartDate = new Date(document.getElementById("start_date").value);
+    selectedStartDate.setHours(0, 0, 0, 0);
+    document.getElementById("end").disabled = false; // Активируем выбор времени возврата
+    
+    // Минимальная дата возврата должна быть на 2 дня позже даты получения
+    var minimumReturnDate = new Date(selectedStartDate);
+    minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
+    var min = new Date(selectedStartDate);
+    min.setDate(min.getDate() + 3);
+    
+    // Проверяем, если пользователь ввел неправильную дату возврата
+    var selectedEndDate = new Date(this.value);
+    if (selectedEndDate < minimumReturnDate) {
+        alert("The return date must be at least 2 days after the date of receipt.");
+        // Устанавливаем правильную дату возврата (на 2 дня позже даты получения)
+        this.value = min.toISOString().split('T')[0];
+    }
+
+    // Проверяем наличие всех необходимых значений и вызываем calculate
+    checkAndCalculate();
+});

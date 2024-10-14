@@ -74,7 +74,7 @@ headerLink.addEventListener("click", function () {
     if (Object.values(fieldsStatus).every(status => status)) {
         document.getElementById("my-modal").classList.add("open");
     } else {
-        headerLinkCheck.innerHTML = "Fill in all required fields";
+        headerLinkCheck.innerHTML = "Заполните все обязательные поля";
         highlightFields(); // Подсвечиваем пустые поля красным бордером
     }
 });
@@ -128,7 +128,7 @@ document.getElementById("end_date").addEventListener("input", function () {
     // Проверяем, если пользователь ввел неправильную дату возврата
     var selectedEndDate = new Date(this.value);
     if (selectedEndDate < minimumReturnDate) {
-        alert("The return date must be at least 1 days after the date of receipt.");
+        alert("Дата возврата должна быть не позднее 1 дней после даты получения..");
         // Устанавливаем правильную дату возврата (на 2 дня позже даты получения)
         this.value = min.toISOString().split('T')[0];
     }

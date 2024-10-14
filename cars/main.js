@@ -240,13 +240,13 @@ function checkButtonState() {
 
     var isButtonEnabled = startDate && endDate && startTime && endTime;
 
-    
+
     // Проверяем, что даты не в прошлом и дата окончания больше даты начала
     if (isButtonEnabled) {
         var today = new Date().setHours(0, 0, 0, 0);
         var selectedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
         var selectedEndDate = new Date(endDate).setHours(0, 0, 0, 0);
-        
+
         // Условие проверки
         if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
             isButtonEnabled = false;
@@ -270,8 +270,40 @@ function enableNextField(currentField) {
 document.getElementById("start").addEventListener("change", function () {
     var startInput = this.value.split(":");
     startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
+    var startInputHours2 = Number(startInput[0]); // Учитываем часовой пояс
 
-    document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
+
+
+    // Получаем текущее время и дату
+    var now = new Date();
+    var currentDate = now.toISOString().split("T")[0]; // Текущая дата в формате YYYY-MM-DD
+    var selectedDate = document.getElementById("start_date").value; // Получаем выбранную дату
+
+    // Проверяем, что выбрана дата
+    if (!selectedDate) {
+        alert("Пожалуйста, выберите дату.");
+        return;
+    }
+
+    // Получаем текущее время
+    var currentHours = now.getHours();
+    var currentMinutes = now.getMinutes();
+
+    // Проверяем, выбрано ли время в прошлом
+    // Если выбрана текущая дата, проверяем, что время не в прошлом
+    if (startInputHours2 < currentHours ||
+        (startInputHours2 === currentHours && Number(startInput[1]) < currentMinutes)) {
+        alert("Select a time no earlier than current.");
+        this.value = ""; // Сбрасываем значение
+        return;
+    } else {
+        // Если дата в будущем, разрешаем любое время
+        document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
+        var startTime = document.getElementById("start").value;
+        time = startTime
+    }
+
+
 
     // Проверяем наличие всех необходимых значений и вызываем calculate
     checkAndCalculate();
@@ -287,63 +319,8 @@ document.getElementById("end").addEventListener("change", function () {
     checkAndCalculate();
 });
 
-// Обработка изменения даты получения
-document.getElementById("start_date").addEventListener("input", function () {
-    var selectedStartDate = new Date(this.value);
-    var today = new Date();
-    document.getElementById("start").disabled = false; // Активируем выбор времени получения
-    today.setHours(0, 0, 0, 0); // Убираем время для сравнения
+// START DATE СТОИТ В ДРУГОМ JS ФАЙЛЕ 
 
-    // Если дата начала меньше сегодняшней даты
-    if (selectedStartDate < today) {
-        alert("Вы не можете выбрать прошедшую дату.");
-        this.value = ""; // Очищаем поле
-        document.getElementById("end_date").value = ""; // Очищаем поле возврата
-        return openDatePicker(this); // Открываем выбор даты
-    }
-
-    // Устанавливаем минимально допустимую дату возврата (на 2 дня позже)
-    var minimumReturnDate = new Date(selectedStartDate);
-    minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
-    
-    // Обновляем минимальную дату возврата
-    document.getElementById("end_date").min = minimumReturnDate.toISOString().split('T')[0];
-
-    // Если дата возврата уже установлена и она меньше минимально допустимой, то обновляем её
-    var endDateInput = document.getElementById("end_date");
-    var selectedEndDate = new Date(endDateInput.value);
-
-    if (selectedEndDate < minimumReturnDate) {
-        endDateInput.value = minimumReturnDate.toISOString().split('T')[0]; // Устанавливаем новую дату возврата
-    }
-
-    // Проверяем наличие всех необходимых значений и вызываем calculate
-    checkAndCalculate();
-});
-
-// Обработка изменения даты возврата
-document.getElementById("end_date").addEventListener("input", function () {
-    var selectedStartDate = new Date(document.getElementById("start_date").value);
-    selectedStartDate.setHours(0, 0, 0, 0);
-    document.getElementById("end").disabled = false; // Активируем выбор времени возврата
-    
-    // Минимальная дата возврата должна быть на 2 дня позже даты получения
-    var minimumReturnDate = new Date(selectedStartDate);
-    minimumReturnDate.setDate(minimumReturnDate.getDate() + 2);
-    var min = new Date(selectedStartDate);
-    min.setDate(min.getDate() + 3);
-    
-    // Проверяем, если пользователь ввел неправильную дату возврата
-    var selectedEndDate = new Date(this.value);
-    if (selectedEndDate < minimumReturnDate) {
-        alert("Дата возврата должна быть минимум на 2 дня позже даты получения.");
-        // Устанавливаем правильную дату возврата (на 2 дня позже даты получения)
-        this.value = min.toISOString().split('T')[0];
-    }
-
-    // Проверяем наличие всех необходимых значений и вызываем calculate
-    checkAndCalculate();
-});
 
 // Функция для проверки наличия всех значений и запуска расчета
 function checkAndCalculate() {
@@ -356,6 +333,19 @@ function checkAndCalculate() {
         calculate();
     }
 }
+
+function setMinStartTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const minTime = `${hours}:${minutes}`;
+
+    // Устанавливаем минимальное время для поля начала
+    document.getElementById('start').setAttribute('min', minTime);
+}
+
+// Установка минимального времени при загрузке
+window.onload = setMinStartTime;
 
 
 var prices = 0;
@@ -403,7 +393,7 @@ var getsCars = "Офис"
 headerSelectValue7?.addEventListener("change", function () {
     getsCars = headerSelectValue7.value
     if (headerSelectValue7.value == 'otel') {
-        s = 10
+        s = 15
         CommonPrice += prices
         CommonPrice += s2
         morePrice.innerHTML = CommonPrice += s
@@ -411,7 +401,7 @@ headerSelectValue7?.addEventListener("change", function () {
         CommonPrice -= s2
         CommonPrice -= prices
     } else if (headerSelectValue7.value == 'airport2') {
-        s = 25
+        s = 30
         CommonPrice += prices
         CommonPrice += s2
         morePrice.innerHTML = CommonPrice += s
@@ -433,7 +423,7 @@ var backCars = 'Офис'
 headerSelectValue8?.addEventListener("change", function () {
     backCars = headerSelectValue8.value
     if (headerSelectValue8.value == 'otel') {
-        s2 = 10
+        s2 = 15
         CommonPrice += prices
         CommonPrice += s
         morePrice.innerHTML = CommonPrice += s2
@@ -441,7 +431,7 @@ headerSelectValue8?.addEventListener("change", function () {
         CommonPrice -= s
         CommonPrice -= prices
     } else if (headerSelectValue8.value == 'airaport2') {
-        s2 = 25
+        s2 = 30
         CommonPrice += prices
         CommonPrice += s
         morePrice.innerHTML = CommonPrice += s2
@@ -548,9 +538,10 @@ document.getElementById("my-modal").addEventListener('click', event => {
     event.currentTarget.classList.remove('open');
 });
 
-document.getElementById("myForm")?.addEventListener("submit", function(event) {
-    event.preventDefault(); // Предотвращаем стандартное поведение формы
-    sendMail(); // Вызываем функцию отправки
+const formBtn = document.querySelector(".form__btn");
+formBtn.addEventListener("click", function (event) {
+    event.preventDefault(); // Предотвращаем отправку формы на сервер
+    console.log("Форма не отправлена");
 });
 
 function sendMail() {
@@ -562,48 +553,53 @@ function sendMail() {
 
     // Проверка обязательных полей, кроме textarea
     if (name === '' || countryCode === '' || phoneNumber === '' || email === '') {
-        alert("Пожалуйста, заполните все обязательные поля.");
+        alert("Please fill out all required fields.");
         return; // Прерываем выполнение функции, если поля не заполнены
     }
 
     // Проверка формата email (обязательно наличие точки и доменной части)
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-        alert("Пожалуйста, введите корректный адрес электронной почты.");
+        alert("Please enter a valid email address.");
         return; // Прерываем выполнение функции, если email некорректен
     }
+    if (document.querySelector("#name").value !== '' && document.querySelector("#message").value !== '') {
+        (function () {
+            emailjs.init("ycbnej7QH72zg6TGT")
+        })();
 
-    // Проверка формата телефонного номера (пример для формата +994 (XX) XXX-XX-XX)
-    const phonePattern = /^\+\d{3}\s*\(\d{2}\)\s*\d{3}-\d{2}-\d{2}$/;
-    if (!phonePattern.test(countryCode + phoneNumber)) {
-        alert("Пожалуйста, введите корректный номер телефона в формате: +994 (XX) XXX-XX-XX");
-        return; // Прерываем выполнение функции, если номер телефона некорректен
+        if (checkbox?.classList == 'checkbox active') {
+            var childrenSitting = "yes"
+        } else {
+            childrenSitting = "no"
+        }
+
+        var params = {
+            name: document.querySelector("#name").value + ' ' + "Car make " + getTitle + ", Date and time of receiving the car: " + getcar + ' ' + time + ', Return date and time: ' + comeback + ' ' + endTime,
+            message: countryCode + phoneNumber + ', Gmail client ' + getEmail + ', Do I need a car seat?: ' + childrenSitting + ', Pick up location: ' + getsCars + ', Car return location: ' + backCars + ', Number of passengers: ' + countPassanger + ", Total: " + morePrice?.innerHTML
+        };
+
+        console.log(params);
+
+
+        // var serviceID = "service_ajn9ixc";
+        // var templateID = "template_bge6w0q";
+
+        // emailjs.send(serviceID, templateID, params)
+        //     .then(res => {
+        //         alert("Thank you. Application accepted. Our manager will contact you shortly.")
+        //         document.getElementById("my-modal").classList.remove("open")
+        //         document.querySelector("#name").value = ''
+        //         document.querySelector("#message").value = ''
+        //         document.querySelector("#message2").value = ''
+        //         document.getElementById("email").value = ''
+        //     })
+        //     .catch();
     }
-
-    (function () {
-        emailjs.init("ycbnej7QH72zg6TGT");
-    })();
-
-    var childrenSitting = (checkbox?.classList.contains('active')) ? "yes" : "no";
-
-    var params = {
-        name: name + ' ' + "Car make " + getTitle + ", Date and time of receiving the car: " + getcar + ' ' + time + ', Return date and time: ' + comeback + ' ' + endTime,
-        message: countryCode + phoneNumber + ', Gmail client ' + email + ', Do I need a car seat?: ' + childrenSitting + ', Pick up location: ' + getsCars + ', Car return location: ' + backCars + ', Number of passengers: ' + countPassanger + ", Total: " + morePrice?.innerHTML
-    };
-
-    console.log(params);
-
-    var serviceID = "service_ajn9ixc"; // Укажите ваш ID сервиса
-    var templateID = "template_bge6w0q"; // Укажите ваш ID шаблона
-
-    emailjs.send(serviceID, templateID, params)
-        .then(res => {
-            alert("Спасибо. Заявка принята. Наш менеджер свяжется с вами в ближайшее время.");
-            document.getElementById("myForm").reset(); // Сброс формы после успешной отправки
-            document.getElementById("my-modal").classList.remove("open"); // Закрыть модальное окно
-        })
-        .catch(error => {
-            console.error("Ошибка отправки:", error);
-            alert("Что-то пошло не так. Попробуйте снова.");
-        });
 }
+
+
+document.getElementById("name").disabled = false
+document.getElementById("countryCode").disabled = false
+document.getElementById("message").disabled = false
+document.getElementById("email").disabled = false

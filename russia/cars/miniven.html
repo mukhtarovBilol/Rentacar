@@ -23,92 +23,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-
-    <nav class="nav">
-        <div class="container">
-            <div class="nav__contact">
-                <a href="/russia" class="nav__contact-logo">
-                    <img src="../image/nav/logo.png" alt="" class="nav__contact-logoImage">
-                </a>
-                <!-- <div class="nav__contact-common"> -->
-                    <div class="nav__contact-socials">
-                        <a href="https://t.me/getrentacar_az" class="nav__contact-social"><i class='bx bxl-telegram'></i> Telegram</a>
-                        <a href="https://api.whatsapp.com/send/?phone=994505501811&text&type=phone_number&app_absent=0" class="nav__contact-social"> <img src="../image/nav/whatsapp.png" alt=""> WhatsApp</a>
-                        <a href="https://www.facebook.com/people/Getrentacaraz/100093672717716/" class="nav__contact-social"> <i class='bx bxl-facebook-circle' ></i> Facebook</a>
-                        <a href="https://www.instagram.com/getrentacar.az/?igsh=MmdtMzdhMDVjcnA4" class="nav__contact-social"> <img src="../image/nav/instagram.png" alt=""> Instagram</a>
-                        <a href="mailto:bookinggetrentacar@gmail.com" class="nav__contact-social"> <img src="../image/nav/email.png" alt=""> Email</a>
-                        <a href="/russia#contact" class="nav__contact-social"> <img src="../image/nav/adress.png" alt=""> Адрес</a>
-                    </div>
-                    <div class="nav__contact-numbers">
-                        <a href="tel:+994556501811" class="nav__contact-number">+994 55 650 18 11</a>
-                        <a href="tel:+994505501811" class="nav__contact-number">+994 50 550 18 11</a>
-            	<div class="nav__language">
-				<span class="nav__language-russia">
-    				<img src="/image/nav/russia.png" alt="" class="nav__language-russia-image">
-				    <p>Русский</p>
-				    <i class='bx bx-chevron-down'></i>
-				</span>
-				   <a href="/" class="nav__language-usa">
-					<img src="/image/nav/usa.png" alt="" class="nav__language-russia-image">
-					<p>English</p>
-				   </a>
-				   <a href="/azerbaijan/" class="nav__language-usa">
-					<img src="/image/nav/azerbaijan.jpg" alt="" class="nav__language-russia-image">
-					<p>Azərbaycan</p>
-				   </a>
-			    </div>
-                    </div>
-                <!-- </div> -->
-            </div>
-            <div class="nav__burger">
-                <span class="nav__burger-line"></span>
-            </div>
-            <ul class="nav__list">
-                <div class="nav__list-helper">
-                    <span class="for__burger"></span>
-                </div>
-                <li class="avto">
-                    <p class="nav__link">Автопарк <i class='bx bx-chevron-down'></i></p>
-                    <ul class="nav__list-avto">
-                        <li class="nav__item-avto">
-                            <a href="/russia/avtopark/standart.html" class="nav__link-avto">СТАНДАРТ </a>
-                        </li>
-                        <li class="nav__item-avto">
-                            <a href="/russia/avtopark/biznes.html" class="nav__link-avto">БИЗНЕС </a>
-                        </li>
-                        <li class="nav__item-avto">
-                            <a href="/russia/avtopark/premium.html" class="nav__link-avto">ПРЕМИУМ</a>
-                        </li>
-                        <li class="nav__item-avto">
-                            <a href="/russia/avtopark/crossover.html" class="nav__link-avto">КРОССОВЕР</a>
-                        </li>                        
-						<li class="nav__item-avto">
-                            <a href="/russia/avtopark/suv.html" class="nav__link-avto">ВНЕДОРОЖНИК</a>
-                        </li>
-                        <li class="nav__item-avto">
-                            <a href="/russia/cars/miniven.html" class="nav__link-avto">МИНИВЕН</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav__item">
-                    <a href="/russia/condition.html" class="nav__link">Условия</a>
-                </li>
-                <li class="nav__item">
-                    <a href="/russia/price.html" class="nav__link">Трансферы </a>
-                </li>
-                <li class="nav__item">
-                    <a href="/russia/#about" class="nav__link">О нас</a>
-                </li>
-                <li class="nav__item">
-                    <a href="/russia/reviews.html" class="nav__link">Отзывы</a>
-                </li>
-                <li class="nav__item">
-                    <a href="/russia/#contact" class="nav__link">Контакты</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+    <nav id="navbar" class="nav"></nav>
     <main>
         <section class="cards">
             <div class="container">
@@ -172,7 +87,7 @@
                                 </div>
                             </div>
                         </div>
-                      <input type="text" placeholder="Количество пассажиров" class="header__info-selectValue9">
+                      <input type="text" placeholder="Количество пассажиров" id="number" class="header__info-selectValue9">
                       <p><strong>Цены могут меняться в зависимости от модели автомобиля !</strong></p>
                     </div>
                   <a href="https://api.whatsapp.com/send?phone=994556501811" target="_blank" class="header__info-helps">Напишите нам в WhatsApp</a>
@@ -366,6 +281,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="main.js"></script>
     <script src="../script.js"></script>
+    <script src="./miniven.js"></script>
     
 </body>
 </html>

@@ -4,7 +4,7 @@ var innerNumber3 = 0;
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    fetch('/price.json')
+    fetch('../../price.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network error');
@@ -28,24 +28,26 @@ function getModelFromTitle() {
         // Получаем текст заголовка и заменяем множественные пробелы на один
         const titleText = titleElement.textContent.trim().replace(/\s+/g, ' ');
         const modelText = titleText.replace(/^Rent\s+/, '');
-        
+
         return modelText || null;
     }
     return null;
 }
 
+
 function renderCarPrices(data, model) {
-    
+    console.log(model);
+
     const container = document?.getElementById('car-prices');
     container.innerHTML = '';
 
     let found = false;
 
-     
+
     for (const key in data) {
-        if (data.hasOwnProperty(key)) {            
+        if (data.hasOwnProperty(key)) {
             if (key === model) {
-                
+
                 const prices = data[key];
                 found = true;
 
@@ -58,7 +60,7 @@ function renderCarPrices(data, model) {
 
                     const priceLabel = document.createElement('p');
                     priceLabel.className = 'price__txt';
-                    priceLabel.textContent = priceInfo.russiaDays;
+                    priceLabel.textContent = priceInfo.day;
 
                     const priceAmountWrapper = document.createElement('div');
                     priceAmountWrapper.className = 'price__all-helper';
@@ -180,8 +182,8 @@ headerInfoInput2.addEventListener("change", function () {
 
 var getEmail = "" // for email
 // get email
-document.getElementById("email")?.addEventListener("change", function () {
-    getEmail = document.getElementById("email")?.value
+document.getElementById("email").addEventListener("change", function () {
+    getEmail = document.getElementById("email").value
 })
 
 // get title
@@ -192,28 +194,26 @@ getTitle = cardTitle.innerText
 
 // date
 
-var startInputHours = 0
-var time = "00" // for email
-var endTime = "00" // for email
-var endInputHours = 0
-
-document.getElementById("start").addEventListener("change", function () {
-    var startInput = document.getElementById("start").value.split(":")
-    startInputHours = Number(startInput[0]) + 3
-    time = startInput.join(":")
-})
-
-document.getElementById("end").addEventListener("change", function () {
-    var endInput = document.getElementById("end").value.split(":")
-    endInputHours = Number(endInput[0])
-    endTime = endInput.join(":")
-    calculate()
-})
+// Инициализация переменных
+var startInputHours = 0;
+var endInputHours = 0;
+var time = "00"; // для email
+var endTime = "00"; // для email
 
 // Устанавливаем сегодняшнюю дату как минимальную для получения и возврата
 var today = new Date().toISOString().split('T')[0];
 document.getElementById("start_date").min = today;
 document.getElementById("end_date").min = today;
+
+// Делаем все поля отключенными, кроме первого
+document.querySelectorAll("input").forEach(input => {
+    if (input.id !== "start_date") {
+        input.disabled = true;
+    }
+});
+
+var startInputHours = 0;
+var endInputHours = 0;
 
 function calculate() {
     var startDate = new Date(document.getElementById("start_date").value);
@@ -221,35 +221,87 @@ function calculate() {
 
     // Количество дней аренды
     var differenceInTime = endDate.getTime() - startDate.getTime();
-    var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх, чтобы учитывать день возврата
+    var differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // округляем вверх
 
+    // Учитываем, если время начала меньше времени окончания
     if (startInputHours <= endInputHours) {
-        differenceInDays++
-        calculateRentalCost(differenceInDays)
-    } else {
-        calculateRentalCost(differenceInDays)
+        differenceInDays++;
+    }
+
+    // Здесь должна быть ваша логика для расчета стоимости аренды
+    calculateRentalCost(differenceInDays);
+}
+
+function checkButtonState() {
+    var startDate = document.getElementById("start_date").value;
+    var endDate = document.getElementById("end_date").value;
+    var startTime = document.getElementById("start").value;
+    var endTime = document.getElementById("end").value;
+
+    var isButtonEnabled = startDate && endDate && startTime && endTime;
+
+    
+    // Проверяем, что даты не в прошлом и дата окончания больше даты начала
+    if (isButtonEnabled) {
+        var today = new Date().setHours(0, 0, 0, 0);
+        var selectedStartDate = new Date(startDate).setHours(0, 0, 0, 0);
+        var selectedEndDate = new Date(endDate).setHours(0, 0, 0, 0);
+        
+        // Условие проверки
+        if (selectedStartDate < today || selectedEndDate < today || selectedEndDate <= selectedStartDate) {
+            isButtonEnabled = false;
+        }
+    }
+
+    var submitButton = document.getElementById("submitButton");
+    if (submitButton) {
+        submitButton.disabled = !isButtonEnabled;
     }
 }
 
-// При изменении даты получения автоматически обновляем минимальную дату возврата и активируем элемент выбора даты возврата
-document.getElementById("start_date").addEventListener("change", function () {
-    var startDate = new Date(document.getElementById("start_date").value);
-    var nextDay = new Date(startDate);
-    nextDay.setDate(startDate.getDate() + 2);
-    var minReturnDate = nextDay.toISOString().split('T')[0];
-    document.getElementById("end_date").min = minReturnDate;
-});
+function enableNextField(currentField) {
+    if (currentField.nextElementSibling) {
+        currentField.nextElementSibling.disabled = false; // Активируем следующее поле
+        currentField.nextElementSibling.focus();
+    }
+}
 
+// Обработка изменения времени получения
 document.getElementById("start").addEventListener("change", function () {
-    document.getElementById("end_date").disabled = false; // Активируем элемент выбора даты возврата
-})
+    var startInput = this.value.split(":");
+    startInputHours = Number(startInput[0]) + 3; // Учитываем часовой пояс
 
-// При изменении даты возврата автоматически пересчитываем стоимость аренды
-document.getElementById("end_date").addEventListener("change", function () {
-    document.getElementById("end").disabled = false; // Активируем элемент выбора времени возврата
-    headerLink.disabled = false
-    headerLinkCheck.innerHTML = ""
+    document.getElementById("end_date").disabled = false; // Активируем выбор даты возврата
+
+    // Проверяем наличие всех необходимых значений и вызываем calculate
+    checkAndCalculate();
 });
+
+// Обработка изменения времени возврата
+document.getElementById("end").addEventListener("change", function () {
+    var endInput = this.value.split(":");
+    endInputHours = Number(endInput[0]);
+    endTime = this.value;
+
+    // Проверяем наличие всех необходимых значений и вызываем calculate
+    checkAndCalculate();
+});
+
+// START DATE СТОИТ В ДРУГОМ JS ФАЙЛЕ 
+
+
+// Функция для проверки наличия всех значений и запуска расчета
+function checkAndCalculate() {
+    var startDate = document.getElementById("start_date").value;
+    var endDate = document.getElementById("end_date").value;
+    var startTime = document.getElementById("start").value;
+    var endTime = document.getElementById("end").value;
+
+    if (startDate && endDate && startTime && endTime) {
+        calculate();
+    }
+}
+
 
 var prices = 0;
 
@@ -296,7 +348,7 @@ var getsCars = "Офис"
 headerSelectValue7?.addEventListener("change", function () {
     getsCars = headerSelectValue7.value
     if (headerSelectValue7.value == 'otel') {
-        s = 15
+        s = 10
         CommonPrice += prices
         CommonPrice += s2
         morePrice.innerHTML = CommonPrice += s
@@ -304,7 +356,7 @@ headerSelectValue7?.addEventListener("change", function () {
         CommonPrice -= s2
         CommonPrice -= prices
     } else if (headerSelectValue7.value == 'airport2') {
-        s = 30
+        s = 25
         CommonPrice += prices
         CommonPrice += s2
         morePrice.innerHTML = CommonPrice += s
@@ -417,101 +469,8 @@ function limitInputLength(event) {
     // Если длина значения превышает 4 символа, обрезаем лишние символы
     if (value.length > 4) {
         input.value = value.slice(0, 4);
-    }
+    }   
 }
-
-// Добавляем обработчик события input
-countryCode.addEventListener('input', limitInputLength);
-// date
-
-const headerLink = document.querySelector(".header__info-link");
-const headerLinkCheck = document.querySelector(".header__info-link-check");
-
-// Функция для проверки заполненности всех полей
-function areAllFieldsFilled() {
-    const startDate = document.getElementById("start_date");
-    const startTime = document.getElementById("start");
-    const endDate = document.getElementById("end_date");
-    const endTime = document.getElementById("end");
-    const placeOfReceipt = document.querySelector(".header__info-selectValue7");
-    const returnLocation = document.querySelector(".header__info-selectValue8");
-
-    return {
-        startDate: startDate.value.trim() !== "",
-        startTime: startTime.value.trim() !== "",
-        endDate: endDate.value.trim() !== "",
-        endTime: endTime.value.trim() !== "",
-        placeOfReceipt: placeOfReceipt?.value.trim() !== "",
-        returnLocation: returnLocation?.value.trim() !== ""
-    };
-}
-
-// Функция для обновления состояния кнопки и сообщения
-function updateButtonState() {
-    const fieldsStatus = areAllFieldsFilled();
-
-    // Обновление состояния кнопки и сообщения
-    if (Object.values(fieldsStatus).every(status => status)) {
-        headerLink.disabled = false;
-        headerLinkCheck.innerHTML = "";
-    } else {
-        headerLink.disabled = true;
-        headerLinkCheck.innerHTML = "Fill in all fields";
-    }
-}
-
-// Функция для добавления рамок вокруг полей в зависимости от их состояния
-function highlightFields() {
-    const fieldsStatus = areAllFieldsFilled();
-
-    // Применение красной рамки для пустых полей и черной рамки для заполненных полей
-    document.getElementById("start_date").classList.toggle('error-border', !fieldsStatus.startDate);
-    document.getElementById("start").classList.toggle('error-border', !fieldsStatus.startTime);
-    document.getElementById("end_date").classList.toggle('error-border', !fieldsStatus.endDate);
-    document.getElementById("end").classList.toggle('error-border', !fieldsStatus.endTime);
-    document?.querySelector(".header__info-selectValue7")?.classList.toggle('error-border', !fieldsStatus.placeOfReceipt);
-    document?.querySelector(".header__info-selectValue8")?.classList.toggle('error-border', !fieldsStatus.returnLocation);
-
-    document.getElementById("start_date").classList.toggle('valid-border', fieldsStatus.startDate);
-    document.getElementById("start").classList.toggle('valid-border', fieldsStatus.startTime);
-    document.getElementById("end_date").classList.toggle('valid-border', fieldsStatus.endDate);
-    document.getElementById("end").classList.toggle('valid-border', fieldsStatus.endTime);
-    document?.querySelector(".header__info-selectValue7")?.classList.toggle('valid-border', fieldsStatus.placeOfReceipt);
-    document?.querySelector(".header__info-selectValue8")?.classList.toggle('valid-border', fieldsStatus.returnLocation);
-}
-
-// Обработчик события на поля ввода и выпадающие списки
-const inputs = [
-    document.getElementById("start_date"),
-    document.getElementById("start"),
-    document.getElementById("end_date"),
-    document.getElementById("end"),
-    document.querySelector(".header__info-selectValue7"),
-    document.querySelector(".header__info-selectValue8")
-];
-
-inputs.forEach(input => {
-    input?.addEventListener('input', () => {
-        updateButtonState();
-        highlightFields();
-    });
-    input?.addEventListener('change', () => {
-        updateButtonState();
-        highlightFields(); // Для select
-    });
-});
-
-// Обработчик события на кнопку
-headerLink.addEventListener("click", function () {
-    const fieldsStatus = areAllFieldsFilled();
-
-    if (Object.values(fieldsStatus).every(status => status)) {
-        document.getElementById("my-modal").classList.add("open");
-    } else {
-        headerLinkCheck.innerHTML = "Fill in all fields";
-        highlightFields(); // Подсвечиваем пустые поля красным бордером
-    }
-});
 
 // Закрытие модального окна
 document.getElementById("close-my-modal-btn").addEventListener("click", function () {
@@ -534,6 +493,7 @@ document.getElementById("my-modal").addEventListener('click', event => {
     event.currentTarget.classList.remove('open');
 });
 
+
 const formBtn = document.querySelector(".form__btn");
 formBtn.addEventListener("click", function (event) {
     event.preventDefault(); // Предотвращаем отправку формы на сервер
@@ -541,20 +501,38 @@ formBtn.addEventListener("click", function (event) {
 });
 
 function sendMail() {
+    // Получаем значения полей
+    const name = document.querySelector("#name").value.trim();
+    const countryCode = document.querySelector("#countryCode").value.trim();
+    const phoneNumber = document.querySelector("#message").value.trim();
+    const email = document.querySelector("#email").value.trim();
+
+    // Проверка обязательных полей, кроме textarea
+    if (name === '' || countryCode === '' || phoneNumber === '' || email === '') {
+        alert("Пожалуйста, заполните все обязательные поля.");
+        return; // Прерываем выполнение функции, если поля не заполнены
+    }
+
+    // Проверка формата email (обязательно наличие точки и доменной части)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return; // Прерываем выполнение функции, если email некорректен
+    }
     if (document.querySelector("#name").value !== '' && document.querySelector("#message").value !== '') {
         (function () {
             emailjs.init("ycbnej7QH72zg6TGT")
         })();
 
         if (checkbox?.classList == 'checkbox active') {
-            var childrenSitting = "Да"
+            var childrenSitting = "yes"
         } else {
-            childrenSitting = "Нет"
+            childrenSitting = "no"
         }
 
         var params = {
-            name: document.querySelector("#name").value + ' ' + "Марка машины " + getTitle + ", Дата и время получение машины: " + getcar + ' ' + time + ', Дата и время возврата: ' + comeback + ' ' + endTime,
-            message: countryCode.value + phoneNumber + ', Gmail клиента ' + getEmail + ', Нужно ли автокресло: ' + childrenSitting + ', Место получение машины: ' + getsCars + ', Место возврата авто: ' + backCars + ', Количество пассажиров: ' + countPassanger + ", Итого: " + morePrice?.innerHTML
+            name: document.querySelector("#name").value + ' ' + "Марка автомобиля " + getTitle + ", Дата и время получения автомобиля: " + getcar + ' ' + time + ', Дата и время возвращения: ' + comeback + ' ' + endTime,
+            message: countryCode + phoneNumber + ', Gmail клиента' + getEmail + ', Нужно ли автокресло?: ' + childrenSitting + ', Место получения: ' + getsCars + ', Место возврата автомобиля: ' + backCars + ', Количество пассажиров: ' + countPassanger + ", Общий: " + morePrice?.innerHTML
         };
 
         console.log(params);
@@ -575,3 +553,8 @@ function sendMail() {
             .catch();
     }
 }
+
+document.getElementById("name").disabled = false
+document.getElementById("countryCode").disabled = false
+document.getElementById("message").disabled = false
+document.getElementById("email").disabled = false
